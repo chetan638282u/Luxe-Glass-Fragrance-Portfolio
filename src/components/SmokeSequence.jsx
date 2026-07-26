@@ -112,7 +112,7 @@ export default function SmokeSequence() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden">
+    <section ref={containerRef} className="relative w-full aspect-[9/16] md:aspect-video bg-black overflow-hidden">
       {/* Loading state for the first frame */}
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center z-10">

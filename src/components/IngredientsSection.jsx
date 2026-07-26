@@ -90,7 +90,7 @@ export default function IngredientsSection() {
         {/* Left Column (Sticky Image) */}
         <div 
           ref={leftColRef} 
-          className="w-full md:w-1/2 h-[50vh] md:h-screen relative overflow-hidden flex-shrink-0 z-10 border-r border-primary/5"
+          className="w-full md:w-1/2 aspect-[4/5] md:aspect-square relative overflow-hidden flex-shrink-0 z-10 border-r border-primary/5"
         >
           {ingredients.map((ing, idx) => (
             <img 
@@ -109,7 +109,7 @@ export default function IngredientsSection() {
           {ingredients.map((ing) => (
             <div 
               key={ing.id} 
-              className="ingredient-text-block w-full min-h-[70vh] md:min-h-screen flex flex-col justify-center px-8 md:px-16 lg:px-24 py-16"
+              className="ingredient-text-block w-full flex flex-col justify-center px-8 md:px-16 lg:px-24 py-24 md:py-32"
             >
               <div className="glass-panel p-card-padding rounded-sm gold-glow">
                 <span className="font-sans text-[10px] text-primary uppercase tracking-widest block mb-4">
