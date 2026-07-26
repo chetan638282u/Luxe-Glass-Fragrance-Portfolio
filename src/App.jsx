@@ -156,7 +156,7 @@ function PublicApp() {
   };
 
   return (
-    <div className="bg-background text-on-background min-h-screen font-sans flex flex-col selection:bg-primary/20 selection:text-primary">
+    <div className="bg-background text-on-background min-h-[100svh] font-sans flex flex-col selection:bg-primary/20 selection:text-primary">
       <Navbar
         activeOverlay={activeOverlay}
         onCloseOverlay={closeOverlay}

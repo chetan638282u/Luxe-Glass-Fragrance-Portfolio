@@ -301,7 +301,7 @@ export default function HeroSection({
 
       <div
         ref={containerRef}
-        className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background"
+        className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden bg-background"
       >
       {/* Hero gradient backdrop during intro */}
       {!slideshowActive && (
