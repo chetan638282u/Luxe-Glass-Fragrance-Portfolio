@@ -3,7 +3,7 @@ import { ShoppingBag, Heart, Search, Menu, X, X as XIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../products';
 
-export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCartClick, visible = true, wishlist = [], onToggleWishlist }) {
+export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCartClick, visible = true, wishlist = [], onToggleWishlist, onAddToCart }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -275,13 +275,25 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
                               <p className="font-sans text-xs text-on-surface truncate">{item.name}</p>
                               <p className="font-sans text-[10px] text-on-surface/40 mt-0.5">{item.price["50ml"]} USD</p>
                             </div>
-                            <button
-                              onClick={() => onToggleWishlist(item.id)}
-                              className="text-on-surface/30 hover:text-primary transition-colors p-1 cursor-pointer"
-                              aria-label="Remove from wishlist"
-                            >
-                              <XIcon size={14} />
-                            </button>
+                            <div className="flex flex-col items-center gap-1">
+                              <button
+                                onClick={() => {
+                                  onAddToCart({ ...item, price: item.price["50ml"], size: "50 ML" });
+                                  setWishlistOpen(false);
+                                }}
+                                className="text-on-surface/50 hover:text-primary transition-colors p-2"
+                                aria-label="Add to cart"
+                              >
+                                <ShoppingBag size={14} />
+                              </button>
+                              <button
+                                onClick={() => onToggleWishlist(item.id)}
+                                className="text-on-surface/30 hover:text-red-400 transition-colors p-2"
+                                aria-label="Remove from wishlist"
+                              >
+                                <X size={14} />
+                              </button>
+                            </div>
                           </div>
                         ))
                       )}
