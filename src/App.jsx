@@ -241,7 +241,9 @@ function PublicApp() {
                 selectedProductId={selectedProductId}
                 onAddToCart={handleAddToCart}
                 onCheckout={(item) => {
-                  handleCloseProductDetail();
+                  // Manually close detail without triggering history.back()
+                  setDetailOpen(false);
+                  setSelectedProductId(null);
                   handleCartCheckout(item);
                 }}
                 onClose={handleCloseProductDetail}
