@@ -117,6 +117,8 @@ export default function IngredientsSection() {
               </div>
             </div>
           ))}
+          {/* Spacer to give the final ingredient image equal scroll time */}
+          <div className="w-full min-h-[55vh] md:min-h-[100dvh] flex-shrink-0"></div>
         </div>
       </div>
     </section>
