@@ -69,7 +69,7 @@ export default function Home({
       <IngredientsSection />
 
       {/* 2. Collection Section */}
-      <div className="relative z-40 bg-background w-full safe-scroll-container">
+      <div className="relative z-40 bg-background w-full">
         <Collection 
           isSection={true} 
           onProductSelect={onProductSelect}
@@ -83,17 +83,17 @@ export default function Home({
       <SmokeSequence />
 
       {/* 3. Fragrance Story Timeline Section */}
-      <div className="safe-scroll-container">
+      <div>
         <Story isSection={true} />
       </div>
 
       {/* 4. Our Story / About Section */}
-      <div className="safe-scroll-container">
+      <div>
         <About isSection={true} />
       </div>
 
       {/* 5. Contact Section */}
-      <div className="safe-scroll-container">
+      <div>
         <Contact isSection={true} />
       </div>
     </div>
