@@ -240,6 +240,10 @@ function PublicApp() {
               <ProductDetails
                 selectedProductId={selectedProductId}
                 onAddToCart={handleAddToCart}
+                onCheckout={(item) => {
+                  handleCloseProductDetail();
+                  handleCartCheckout(item);
+                }}
                 onClose={handleCloseProductDetail}
                 onProductSelect={handleOpenProductDetail}
               />

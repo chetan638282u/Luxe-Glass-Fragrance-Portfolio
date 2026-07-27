@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 import { products } from '../products';
 
-export default function ProductDetails({ selectedProductId, onAddToCart, onClose, onProductSelect }) {
+export default function ProductDetails({ selectedProductId, onAddToCart, onCheckout, onClose, onProductSelect }) {
   const activeProduct = products[selectedProductId] || products["midnight-oud"];
   const [selectedSize, setSelectedSize] = useState("50 ML");
 
@@ -134,7 +134,7 @@ export default function ProductDetails({ selectedProductId, onAddToCart, onClose
               ADD TO BAG
             </button>
             <button 
-              onClick={() => onAddToCart({ ...activeProduct, price: activeProduct.price[selectedSize === "50 ML" ? "50ml" : "100ml"], size: selectedSize })}
+              onClick={() => onCheckout({ ...activeProduct, price: activeProduct.price[selectedSize === "50 ML" ? "50ml" : "100ml"], size: selectedSize, quantity: 1 })}
               className="flex-1 border border-primary text-primary font-sans font-medium text-xs tracking-[0.2em] py-4 uppercase hover:bg-primary hover:text-background transition-all"
             >
               CHECKOUT
