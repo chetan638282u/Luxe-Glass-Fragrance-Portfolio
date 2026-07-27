@@ -185,7 +185,7 @@ function PublicApp() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             className="fixed inset-0 z-[60] overflow-y-auto bg-background"
           >
             <button
@@ -213,7 +213,7 @@ function PublicApp() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             className="fixed inset-0 z-[60] overflow-y-auto bg-background"
           >
             <button
