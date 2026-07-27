@@ -50,12 +50,14 @@ export default function IngredientsSection() {
 
       // Crossfade images based on which text block is active
       const sections = gsap.utils.toArray('.ingredient-text-block');
+      const isMobile = window.innerWidth < 768;
+      const triggerPoint = isMobile ? '45%' : '50%';
       
       sections.forEach((section, index) => {
         ScrollTrigger.create({
           trigger: section,
-          start: 'top center',
-          end: 'bottom center',
+          start: `top ${triggerPoint}`,
+          end: `bottom ${triggerPoint}`,
           onEnter: () => {
             gsap.to('.ingredient-img', { opacity: 0, duration: 0.6, ease: 'power2.inOut' });
             gsap.to(`.ingredient-img-${index}`, { opacity: 1, duration: 0.6, ease: 'power2.inOut' });
