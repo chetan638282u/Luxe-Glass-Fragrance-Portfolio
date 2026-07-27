@@ -74,21 +74,21 @@ export default function IngredientsSection() {
 
   return (
     <section ref={containerRef} className="relative bg-background w-full">
-      <div className="flex flex-row w-full h-full">
+      <div className="flex flex-col md:flex-row w-full h-full">
         
         {/* Left Column Wrapper (maintains flex layout) */}
-        <div className="w-[40%] md:w-1/2 flex-shrink-0 border-r border-primary/5">
+        <div className="w-full h-[45vh] md:h-auto md:w-1/2 flex-shrink-0 z-30 bg-background border-b md:border-b-0 md:border-r border-primary/5">
           {/* Inner element that actually gets pinned */}
           <div 
             ref={leftColRef} 
-            className="w-full h-[100dvh] md:h-screen relative overflow-hidden flex items-center justify-center bg-surface-container-lowest"
+            className="w-full h-[45vh] md:h-screen relative overflow-hidden flex items-center justify-center bg-background"
           >
             {ingredients.map((ing, idx) => (
               <img 
                 key={ing.id}
                 src={ing.image}
                 alt={ing.title}
-                className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-cover brightness-110 contrast-110`}
+                className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-contain p-8 md:p-16 brightness-110 contrast-110`}
                 style={{ opacity: idx === 0 ? 1 : 0 }}
               />
             ))}
@@ -96,11 +96,11 @@ export default function IngredientsSection() {
         </div>
 
         {/* Right Column (Scrolling Text) */}
-        <div className="w-[60%] md:w-1/2 flex flex-col z-20">
+        <div className="w-full md:w-1/2 flex flex-col z-20">
           {ingredients.map((ing) => (
             <div 
               key={ing.id} 
-              className="ingredient-text-block w-full flex flex-col justify-center min-h-[75vh] md:min-h-[100dvh] px-4 md:px-16 lg:px-24 py-16 md:py-32"
+              className="ingredient-text-block w-full flex flex-col justify-center min-h-[55vh] md:min-h-[100dvh] px-6 md:px-16 lg:px-24 py-16 md:py-32"
             >
               <div className="glass-panel p-6 md:p-card-padding rounded-sm gold-glow">
                 <span className="font-sans text-[10px] text-primary uppercase tracking-widest block mb-2 md:mb-4">
