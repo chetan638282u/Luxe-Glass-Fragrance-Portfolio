@@ -90,7 +90,7 @@ export default function IngredientsSection() {
                 key={ing.id}
                 src={ing.image}
                 alt={ing.title}
-                className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-contain p-8 md:p-16 brightness-110 contrast-110`}
+                className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-contain brightness-110 contrast-110`}
                 style={{ opacity: idx === 0 ? 1 : 0 }}
               />
             ))}
