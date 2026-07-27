@@ -88,7 +88,7 @@ export default function IngredientsSection() {
                 key={ing.id}
                 src={ing.image}
                 alt={ing.title}
-                className={`ingredient-img ingredient-img-${idx} absolute w-3/4 h-3/4 object-contain brightness-110 contrast-110 drop-shadow-2xl`}
+                className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-cover brightness-110 contrast-110`}
                 style={{ opacity: idx === 0 ? 1 : 0 }}
               />
             ))}
@@ -100,16 +100,16 @@ export default function IngredientsSection() {
           {ingredients.map((ing) => (
             <div 
               key={ing.id} 
-              className="ingredient-text-block w-full flex flex-col justify-center min-h-[100dvh] px-4 md:px-16 lg:px-24 py-16 md:py-32"
+              className="ingredient-text-block w-full flex flex-col justify-center min-h-[75vh] md:min-h-[100dvh] px-4 md:px-16 lg:px-24 py-16 md:py-32"
             >
-              <div className="glass-panel p-4 md:p-card-padding rounded-sm gold-glow">
-                <span className="font-sans text-[9px] md:text-[10px] text-primary uppercase tracking-widest block mb-2 md:mb-4">
+              <div className="glass-panel p-6 md:p-card-padding rounded-sm gold-glow">
+                <span className="font-sans text-[10px] text-primary uppercase tracking-widest block mb-2 md:mb-4">
                   {ing.subtitle}
                 </span>
-                <h3 className="font-serif text-xl md:text-5xl mb-3 md:mb-6 text-on-background leading-tight">
+                <h3 className="font-serif text-2xl md:text-5xl mb-3 md:mb-6 text-on-background leading-tight">
                   {ing.title}
                 </h3>
-                <p className="font-sans text-xs md:text-lg text-on-surface-variant leading-relaxed font-light">
+                <p className="font-sans text-sm md:text-lg text-on-surface-variant leading-relaxed font-light">
                   {ing.description}
                 </p>
               </div>
