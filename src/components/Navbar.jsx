@@ -275,7 +275,7 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
                               <p className="font-sans text-xs text-on-surface truncate">{item.name}</p>
                               <p className="font-sans text-[10px] text-on-surface/40 mt-0.5">{item.price["50ml"]} USD</p>
                             </div>
-                            <div className="flex flex-col items-center gap-1">
+                            <div className="flex flex-row items-center gap-1">
                               <button
                                 onClick={() => {
                                   onAddToCart({ ...item, price: item.price["50ml"], size: "50 ML" });
