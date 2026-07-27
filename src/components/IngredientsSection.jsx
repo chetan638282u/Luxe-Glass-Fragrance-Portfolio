@@ -30,13 +30,6 @@ const ingredients = [
     subtitle: 'THE GLOW',
     description: 'Fossilized tree resin slowly warmed into a luxurious golden elixir. This radiant amber note wraps the wearer in a sensual, honeyed warmth that radiates intimately throughout the evening.',
     image: ingredientAmber
-  },
-  {
-    id: 'vetiver',
-    title: 'Haitian Vetiver',
-    subtitle: 'THE EARTH',
-    description: 'Crisp, emerald roots pulled directly from the volcanic soils of Haiti. Vetiver injects a sharp, earthy green freshness that cuts through the darkness, ensuring the scent profile remains perfectly balanced and alive.',
-    image: ingredientVetiver
   }
 ];
 
@@ -87,21 +80,23 @@ export default function IngredientsSection() {
     <section ref={containerRef} className="relative bg-background w-full">
       <div className="flex flex-col md:flex-row w-full h-full">
         
-        {/* Left Column (Sticky Image) */}
-        <div 
-          ref={leftColRef} 
-          className="w-full md:w-1/2 aspect-[4/5] md:aspect-square relative overflow-hidden flex-shrink-0 z-10 border-r border-primary/5"
-        >
-          {ingredients.map((ing, idx) => (
-            <img 
-              key={ing.id}
-              src={ing.image}
-              alt={ing.title}
-              className={`ingredient-img ingredient-img-${idx} absolute inset-0 w-full h-full object-cover brightness-110 contrast-110`}
-              style={{ opacity: idx === 0 ? 1 : 0 }}
-            />
-          ))}
-          {/* Removed the dark gradient overlay to ensure images are bright and high quality */}
+        {/* Left Column Wrapper (maintains flex layout) */}
+        <div className="w-full md:w-1/2 flex-shrink-0 border-r border-primary/5">
+          {/* Inner element that actually gets pinned */}
+          <div 
+            ref={leftColRef} 
+            className="w-full h-[50vh] md:h-screen relative overflow-hidden flex items-center justify-center bg-surface-container-lowest"
+          >
+            {ingredients.map((ing, idx) => (
+              <img 
+                key={ing.id}
+                src={ing.image}
+                alt={ing.title}
+                className={`ingredient-img ingredient-img-${idx} absolute w-3/4 h-3/4 object-contain brightness-110 contrast-110 drop-shadow-2xl`}
+                style={{ opacity: idx === 0 ? 1 : 0 }}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Right Column (Scrolling Text) */}
