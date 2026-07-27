@@ -11,18 +11,6 @@ import ProductDetails from './pages/ProductDetails';
 import Checkout from './pages/Checkout';
 
 import { checkSession, addInquiry, addOrder } from './admin/adminStore';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Initialize global scroll configurations for mobile
-// normalizeScroll(true) forces JS scroll interception to prevent Chrome URL bar from halting the scroll
-// ignoreMobileResize prevents layout thrashing when the URL bar does hide
-if (typeof window !== 'undefined') {
-  ScrollTrigger.normalizeScroll(true);
-  ScrollTrigger.config({ ignoreMobileResize: true });
-}
 
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
 const AdminLayout = lazy(() => import('./admin/AdminLayout'));
