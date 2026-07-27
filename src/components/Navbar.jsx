@@ -249,13 +249,13 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
 
               <AnimatePresence>
                 {wishlistOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="absolute right-0 mt-3 w-80 bg-[#16130d]/95 backdrop-blur-2xl border border-primary/10 rounded-sm shadow-2xl overflow-hidden"
-                  >
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="fixed top-20 left-1/2 -translate-x-1/2 md:absolute md:top-auto md:left-auto md:translate-x-0 md:right-0 mt-3 w-[92vw] md:w-[420px] bg-[#16130d]/95 backdrop-blur-2xl border border-primary/10 rounded-sm shadow-2xl overflow-hidden z-50"
+                    >
                     <div className="px-5 py-4 border-b border-primary/5">
                       <span className="font-sans text-[10px] tracking-widest uppercase text-on-surface/50">Wishlist ({wishlist.length})</span>
                     </div>
