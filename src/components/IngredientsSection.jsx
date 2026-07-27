@@ -14,21 +14,21 @@ const ingredients = [
     id: 'oud',
     title: 'Rare Cambodian Oud',
     subtitle: 'THE FOUNDATION',
-    description: 'Sourced from the deep forests of Cambodia, our Oud is aged for over a decade. It provides a resonant, smoky depth that anchors the fragrance, revealing its complex woody character only to those who linger.',
+    description: 'Sourced from the deep, untouched forests of Cambodia, our Oud is meticulously aged in subterranean vaults for over a decade to reach its peak olfactory resonance. This painstaking maturation process yields an incredibly rich, smoky depth that anchors the entire fragrance profile. It reveals its complex, woody character slowly, unfolding across the skin in waves of dark resin, damp earth, and subtle leather. This is a foundational note reserved only for the most discerning connoisseurs who appreciate a scent that lingers long after they have left the room.',
     image: ingredientOud
   },
   {
     id: 'iris',
     title: 'Midnight Black Iris',
     subtitle: 'THE HEART',
-    description: 'A delicate yet intensely dark floral note. Hand-harvested beneath the moonlight, the Black Iris offers a velvety, powdery elegance that contrasts beautifully with the raw power of the base notes.',
+    description: 'A delicate yet intensely dark floral note, the Midnight Black Iris is a masterpiece of botanical rarity. Hand-harvested exclusively beneath the cool moonlight to preserve its fragile aromatic compounds, it undergoes a meticulous cold-extraction process. The result is a velvety, powdery elegance that carries a whisper of melancholic beauty, contrasting magnificently with the raw, untamed power of the base notes. It blooms at the heart of the perfume, offering a sophisticated, lingering trail of bruised petals and twilight shadows.',
     image: ingredientIris
   },
   {
     id: 'amber',
     title: 'Liquid Gold Amber',
     subtitle: 'THE GLOW',
-    description: 'Fossilized tree resin slowly warmed into a luxurious golden elixir. This radiant amber note wraps the wearer in a sensual, honeyed warmth that radiates intimately throughout the evening.',
+    description: 'Ancient fossilized tree resin is gently coaxed and slowly warmed into a luxurious, golden elixir. This is not merely a scent, but a radiant, tactile experience that wraps the wearer in a profoundly sensual, honeyed warmth. As the fragrance develops, the amber note pulses intimately against the skin, radiating a soft, sunlit aura that endures throughout the evening and deep into the night. It bridges the gap between the earthly and the ethereal, leaving a signature glow that is utterly unforgettable.',
     image: ingredientAmber
   }
 ];
