@@ -96,6 +96,19 @@ function PublicApp() {
     }
   }, [introPlayed]);
 
+  // Lock body scroll when any overlay is active
+  useEffect(() => {
+    if (activeOverlay === 'checkout' || detailOpen || cartOpen || inquiryOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeOverlay, detailOpen, cartOpen, inquiryOpen]);
+
   const handleToggleWishlist = (productId) => {
     setWishlist((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
