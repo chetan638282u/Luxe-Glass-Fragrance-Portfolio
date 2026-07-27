@@ -69,13 +69,15 @@ export default function Home({
       <IngredientsSection />
 
       {/* 2. Collection Section */}
-      <Collection 
-        isSection={true} 
-        onProductSelect={onProductSelect}
-        wishlist={wishlist}
-        onToggleWishlist={onToggleWishlist}
-        onAddToCart={onAddToCart}
-      />
+      <div className="relative z-40 bg-background w-full">
+        <Collection 
+          isSection={true} 
+          onProductSelect={onProductSelect}
+          wishlist={wishlist}
+          onToggleWishlist={onToggleWishlist}
+          onAddToCart={onAddToCart}
+        />
+      </div>
 
       {/* Cinematic Smoke Scrubbing Sequence */}
       <SmokeSequence />
