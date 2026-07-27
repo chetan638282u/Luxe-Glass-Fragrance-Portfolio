@@ -178,6 +178,7 @@ function PublicApp() {
         visible={showNavbar}
         wishlist={wishlist}
         onToggleWishlist={handleToggleWishlist}
+        onAddToCart={handleAddToCart}
       />
 
       <main className="flex-grow">
