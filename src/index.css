@@ -34,6 +34,13 @@
 html, body {
   max-width: 100%;
   overflow-x: clip;
+  overscroll-behavior-y: none;
+}
+
+/* Bypass Chrome's scroll-chaining heuristic and provide GPU hinting for smooth scrolling */
+.safe-scroll-container {
+  contain: paint layout;
+  will-change: transform;
 }
 
 body {

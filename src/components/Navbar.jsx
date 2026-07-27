@@ -340,7 +340,7 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
               </button>
             </div>
             
-            <nav className="flex flex-col items-center justify-center h-[75vh] space-y-8">
+            <nav className="flex flex-col items-center justify-center flex-1 space-y-8 py-16">
               {navLinks.map((link, idx) => (
                 <motion.button
                   key={link.id}
