@@ -29,7 +29,7 @@ export default function ProductDetails({ selectedProductId, onAddToCart, onClose
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      exit={typeof window !== 'undefined' && window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
       className="pt-32 pb-section-gap px-6 max-w-7xl mx-auto"
     >
       {/* Back to Collection breadcrumb */}
