@@ -142,7 +142,11 @@ function PublicApp() {
   const handleCartCheckout = (item = null) => {
     setCartOpen(false);
     setCheckoutItem(item);
-    window.location.hash = '#checkout';
+    
+    // Preserve current history state (like {page: 'detail'}) when opening checkout
+    const currentState = window.history.state || {};
+    window.history.pushState(currentState, '', '#checkout');
+    setActiveOverlay('checkout');
   };
 
   const handleInquireProduct = (name) => {
