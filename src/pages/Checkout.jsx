@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, ChevronLeft, CreditCard, Wallet, Plus, Minus } from 'lucide-react';
 import { addOrder } from '../admin/adminStore';
