@@ -17,7 +17,7 @@ export default function HeroSection({
   
   // Start the slideshow exactly where the intro sequence ends (3rd image, index 2)
   const [activeSlide, setActiveSlide] = useState(images.length > 2 ? 2 : (images.length > 0 ? images.length - 1 : 0));
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = false;
   const [slotRect, setSlotRect] = useState(null);
 
   const containerRef = useRef(null);
@@ -33,14 +33,7 @@ export default function HeroSection({
   useEffect(() => { onIntroCompleteRef.current = onIntroComplete; }, [onIntroComplete]);
   useEffect(() => { setIntroPlayedRef.current = setIntroPlayed; }, [setIntroPlayed]);
 
-  // Check prefers-reduced-motion
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(media.matches);
-    const listener = (e) => setPrefersReducedMotion(e.matches);
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, []);
+  // (prefers-reduced-motion check removed to ensure animation always plays)
 
   // Measure letter slot position
   const measureSlot = useCallback(() => {
