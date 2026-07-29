@@ -296,6 +296,37 @@ function PublicApp() {
 }
 
 export default function App() {
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    const savedScrollPos = sessionStorage.getItem('aetheris_scroll_pos');
+    if (savedScrollPos) {
+      const yPos = parseInt(savedScrollPos, 10);
+      window.scrollTo(0, yPos);
+      setTimeout(() => {
+        window.scrollTo(0, yPos);
+      }, 350);
+      sessionStorage.removeItem('aetheris_scroll_pos');
+    }
+
+    let scrollTimeout;
+    const handleScroll = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        sessionStorage.setItem('aetheris_scroll_pos', window.scrollY.toString());
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
