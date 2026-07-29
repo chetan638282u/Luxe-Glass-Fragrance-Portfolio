@@ -314,15 +314,12 @@ function PublicApp() {
         {toast && (
           <motion.div
             key={toast.id}
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-primary text-background px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 border border-primary/20 pointer-events-none"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] bg-[#0c0a06]/95 backdrop-blur-md px-10 py-4 border border-primary/20 pointer-events-none shadow-2xl flex items-center"
           >
-            <div className="w-5 h-5 rounded-full bg-background/20 flex items-center justify-center">
-              <span className="text-background text-[10px]">✓</span>
-            </div>
-            <span className="font-sans text-xs tracking-widest uppercase font-medium">{toast.message}</span>
+            <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-on-surface">{toast.message}</span>
           </motion.div>
         )}
       </AnimatePresence>
