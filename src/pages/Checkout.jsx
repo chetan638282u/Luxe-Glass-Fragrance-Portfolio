@@ -7,6 +7,13 @@ export default function Checkout({ cart, setCart, onClose, checkoutItem = null }
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [checkedOutItem, setCheckedOutItem] = useState(null);
+  const [localCheckoutItem, setLocalCheckoutItem] = useState(checkoutItem);
+  
+  // Sync if prop changes
+  useEffect(() => {
+    setLocalCheckoutItem(checkoutItem);
+  }, [checkoutItem]);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,19 +28,27 @@ export default function Checkout({ cart, setCart, onClose, checkoutItem = null }
   });
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const displayCart = checkoutItem
-    ? cart.filter((i) => i.id === checkoutItem.id && i.size === checkoutItem.size)
+  const displayCart = localCheckoutItem
+    ? [localCheckoutItem]
     : cart;
   const displayTotal = displayCart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleUpdateQty = (item, delta) => {
     const newQty = item.quantity + delta;
-    if (newQty <= 0) {
-      setCart((prev) => prev.filter((i) => !(i.id === item.id && i.size === item.size)));
+    if (localCheckoutItem) {
+      if (newQty <= 0) {
+        onClose();
+      } else {
+        setLocalCheckoutItem({ ...localCheckoutItem, quantity: newQty });
+      }
     } else {
-      setCart((prev) =>
-        prev.map((i) => (i.id === item.id && i.size === item.size ? { ...i, quantity: newQty } : i))
-      );
+      if (newQty <= 0) {
+        setCart((prev) => prev.filter((i) => !(i.id === item.id && i.size === item.size)));
+      } else {
+        setCart((prev) =>
+          prev.map((i) => (i.id === item.id && i.size === item.size ? { ...i, quantity: newQty } : i))
+        );
+      }
     }
   };
 
@@ -62,9 +77,9 @@ export default function Checkout({ cart, setCart, onClose, checkoutItem = null }
   };
 
   const handlePlaceOrder = () => {
-    placeOrder(displayCart, null);
-    if (checkoutItem) {
-      setCart((prev) => prev.filter((i) => !(i.id === checkoutItem.id && i.size === checkoutItem.size)));
+    placeOrder(displayCart, localCheckoutItem);
+    if (localCheckoutItem) {
+      setCart((prev) => prev.filter((i) => !(i.id === localCheckoutItem.id && i.size === localCheckoutItem.size)));
     } else {
       setCart([]);
     }
@@ -125,7 +140,7 @@ export default function Checkout({ cart, setCart, onClose, checkoutItem = null }
           <div className="md:col-span-3 space-y-6">
             <h2 className="font-sans text-xs tracking-[0.2em] uppercase text-on-surface/50 border-b border-primary/10 pb-3">
               Order Summary ({displayCart.length} {displayCart.length === 1 ? 'item' : 'items'})
-              {checkoutItem && <span className="text-primary/60 ml-2">(single item)</span>}
+              {localCheckoutItem && <span className="text-primary/60 ml-2">(single item)</span>}
             </h2>
 
             <div className="divide-y divide-primary/5">
