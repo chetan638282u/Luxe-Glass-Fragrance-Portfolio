@@ -207,11 +207,11 @@ function PublicApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
-            className="fixed inset-0 z-[60] overflow-y-auto bg-background"
+            className="fixed inset-0 z-[70] overflow-y-auto bg-background"
           >
             <button
-              onClick={closeOverlay}
-              className="fixed top-4 right-4 z-[61] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
+              onClick={() => window.history.back()}
+              className="fixed top-4 right-4 z-[71] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
               aria-label="Close"
             >
               <X size={18} />
@@ -221,7 +221,7 @@ function PublicApp() {
                 <Checkout
                   cart={cart}
                   setCart={setCart}
-                  onClose={closeOverlay}
+                  onClose={() => window.history.back()}
                   checkoutItem={checkoutItem}
                 />
               </Suspense>
@@ -252,9 +252,6 @@ function PublicApp() {
                   selectedProductId={selectedProductId}
                   onAddToCart={handleAddToCart}
                   onCheckout={(item) => {
-                    // Manually close detail without triggering history.back()
-                    setDetailOpen(false);
-                    setSelectedProductId(null);
                     handleCartCheckout(item);
                   }}
                   onClose={handleCloseProductDetail}
