@@ -24,6 +24,9 @@ const heroImages = [
 ];
 
 export default function Home({ 
+  introPlayed,
+  setIntroPlayed,
+  setShowNavbar,
   wishlist,
   onToggleWishlist,
   onAddToCart,
@@ -33,7 +36,12 @@ export default function Home({
   return (
     <div className="overflow-x-hidden">
       {/* Typography-Driven Hero Section */}
-      <HeroSection images={heroImages} />
+      <HeroSection 
+        images={heroImages}
+        onIntroComplete={() => setShowNavbar(true)}
+        introPlayed={introPlayed}
+        setIntroPlayed={setIntroPlayed}
+      />
 
       {/* Intro / The Philosophy */}
       <section id="explore" className="py-section-gap px-6 max-w-7xl mx-auto">

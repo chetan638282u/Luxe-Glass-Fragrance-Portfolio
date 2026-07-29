@@ -35,6 +35,8 @@ function PublicApp() {
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [introPlayed, setIntroPlayed] = useState(false);
 
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("aetheris_cart");
@@ -86,6 +88,13 @@ function PublicApp() {
     onPopState();
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
+
+  // Navbar visibility after intro
+  useEffect(() => {
+    if (introPlayed) {
+      setShowNavbar(true);
+    }
+  }, [introPlayed]);
 
 
 
@@ -168,7 +177,7 @@ function PublicApp() {
         onCloseOverlay={closeOverlay}
         cartCount={totalCartCount}
         onCartClick={() => setCartOpen(true)}
-        visible={true}
+        visible={showNavbar}
         wishlist={wishlist}
         onToggleWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
@@ -176,6 +185,9 @@ function PublicApp() {
 
       <main className="flex-grow">
         <Home
+          introPlayed={introPlayed}
+          setIntroPlayed={setIntroPlayed}
+          setShowNavbar={setShowNavbar}
           wishlist={wishlist}
           onToggleWishlist={handleToggleWishlist}
           onAddToCart={handleAddToCart}
