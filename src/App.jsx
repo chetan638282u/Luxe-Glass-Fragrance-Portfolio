@@ -167,7 +167,12 @@ function PublicApp() {
       setDetailOpen(false);
       setSelectedProductId(null);
     }
-    window.location.hash = '';
+    if (window.location.hash === '#checkout') {
+      window.history.back();
+    } else if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      setActiveOverlay(null);
+    }
   };
 
   return (
