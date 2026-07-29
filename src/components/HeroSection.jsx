@@ -60,43 +60,20 @@ export default function HeroSection({
     };
   }, [measureSlot]);
 
-  // Preload images — only need first 3 for the intro, rest load in background
+  // Preload images in background but start intro immediately
   useEffect(() => {
-    if (introPlayed || prefersReducedMotion) {
-      setIntroReady(true);
-      return;
-    }
+    setIntroReady(true); // Fire instantly
+    
     const toLoad = images.filter(Boolean);
-    if (toLoad.length === 0) { setIntroReady(true); return; }
-
-    const introCount = Math.min(3, toLoad.length);
-    let loadedIntro = 0;
-
-    // Load first 3 images (intro sequence)
-    toLoad.slice(0, 3).forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      const done = () => { loadedIntro++; if (loadedIntro >= introCount) setIntroReady(true); };
-      img.onload = done;
-      img.onerror = done;
-    });
-
-    // Load remaining images in background (no state tracking needed)
-    toLoad.slice(3).forEach((src) => {
+    toLoad.forEach((src) => {
       const img = new Image();
       img.src = src;
     });
-  }, [images, introPlayed, prefersReducedMotion]);
+  }, [images]);
 
   // GSAP intro timeline
   useEffect(() => {
     if (!introReady || !slotRect) return;
-
-    if (introPlayed || prefersReducedMotion) {
-      setSlideshowActive(true);
-      onIntroCompleteRef.current();
-      return;
-    }
 
     const imgContainer = imageContainerRef.current;
     const wordmark = wordmarkRef.current;
