@@ -52,23 +52,32 @@ export default function HeroSection({
 
   useEffect(() => {
     const timer = setTimeout(measureSlot, 100);
-    const observer = new ResizeObserver(measureSlot);
-    if (containerRef.current) observer.observe(containerRef.current);
+    let observer;
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      observer = new ResizeObserver(measureSlot);
+      observer.observe(containerRef.current);
+    }
     return () => {
       clearTimeout(timer);
-      observer.disconnect();
+      if (observer) observer.disconnect();
     };
   }, [measureSlot]);
 
-  // Preload images in background but start intro immediately
+  // Fallback to ensure we never get stuck on a black screen
   useEffect(() => {
-    setIntroReady(true); // Fire instantly
-    
-    const toLoad = images.filter(Boolean);
-    toLoad.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    const fallback = setTimeout(() => {
+      if (!slideshowActive) {
+        setSlideshowActive(true);
+        setIntroPlayedRef.current(true);
+        onIntroCompleteRef.current();
+      }
+    }, 4500); // 4.5s max for intro
+    return () => clearTimeout(fallback);
+  }, [slideshowActive]);
+
+  // Start intro immediately
+  useEffect(() => {
+    setIntroReady(true);
   }, [images]);
 
   // GSAP intro timeline
