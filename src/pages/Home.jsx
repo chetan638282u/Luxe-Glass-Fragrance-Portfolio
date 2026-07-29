@@ -1,11 +1,12 @@
-import React from 'react';
-import Collection from './Collection';
-import Story from './Story';
-import About from './About';
-import Contact from './Contact';
+import React, { Suspense, lazy } from 'react';
 import HeroSection from '../components/HeroSection';
-import IngredientsSection from '../components/IngredientsSection';
-import SmokeSequence from '../components/SmokeSequence';
+
+const Collection = lazy(() => import('./Collection'));
+const Story = lazy(() => import('./Story'));
+const About = lazy(() => import('./About'));
+const Contact = lazy(() => import('./Contact'));
+const IngredientsSection = lazy(() => import('../components/IngredientsSection'));
+const SmokeSequence = lazy(() => import('../components/SmokeSequence'));
 
 import heroBg1 from '../assets/hero_bg_1.jpeg';
 import heroBg2 from '../assets/hero_bg_2.jpeg';
@@ -23,9 +24,6 @@ const heroImages = [
 ];
 
 export default function Home({ 
-  introPlayed,
-  setIntroPlayed,
-  setShowNavbar,
   wishlist,
   onToggleWishlist,
   onAddToCart,
@@ -35,12 +33,7 @@ export default function Home({
   return (
     <div className="overflow-x-hidden">
       {/* Typography-Driven Hero Section */}
-      <HeroSection 
-        images={heroImages}
-        onIntroComplete={() => setShowNavbar(true)}
-        introPlayed={introPlayed}
-        setIntroPlayed={setIntroPlayed}
-      />
+      <HeroSection images={heroImages} />
 
       {/* Intro / The Philosophy */}
       <section id="explore" className="py-section-gap px-6 max-w-7xl mx-auto">
@@ -66,35 +59,47 @@ export default function Home({
       </section>
 
       {/* Sticky Scroll Ingredients Section */}
-      <IngredientsSection />
+      <Suspense fallback={null}>
+        <IngredientsSection />
+      </Suspense>
 
       {/* 2. Collection Section */}
       <div className="relative z-40 bg-background w-full">
-        <Collection 
-          isSection={true} 
-          onProductSelect={onProductSelect}
-          wishlist={wishlist}
-          onToggleWishlist={onToggleWishlist}
-          onAddToCart={onAddToCart}
-        />
+        <Suspense fallback={null}>
+          <Collection 
+            isSection={true} 
+            onProductSelect={onProductSelect}
+            wishlist={wishlist}
+            onToggleWishlist={onToggleWishlist}
+            onAddToCart={onAddToCart}
+          />
+        </Suspense>
       </div>
 
       {/* Cinematic Smoke Scrubbing Sequence */}
-      <SmokeSequence />
+      <Suspense fallback={null}>
+        <SmokeSequence />
+      </Suspense>
 
       {/* 3. Fragrance Story Timeline Section */}
       <div>
-        <Story isSection={true} />
+        <Suspense fallback={null}>
+          <Story isSection={true} />
+        </Suspense>
       </div>
 
       {/* 4. Our Story / About Section */}
       <div>
-        <About isSection={true} />
+        <Suspense fallback={null}>
+          <About isSection={true} />
+        </Suspense>
       </div>
 
       {/* 5. Contact Section */}
       <div>
-        <Contact isSection={true} />
+        <Suspense fallback={null}>
+          <Contact isSection={true} />
+        </Suspense>
       </div>
     </div>
   );

@@ -3,12 +3,12 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'rea
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft } from 'lucide-react';
 import Navbar from './components/Navbar';
-import CartDrawer from './components/CartDrawer';
-import InquiryModal from './components/InquiryModal';
-
 import Home from './pages/Home';
-import ProductDetails from './pages/ProductDetails';
-import Checkout from './pages/Checkout';
+
+const CartDrawer = lazy(() => import('./components/CartDrawer'));
+const InquiryModal = lazy(() => import('./components/InquiryModal'));
+const ProductDetails = lazy(() => import('./pages/ProductDetails'));
+const Checkout = lazy(() => import('./pages/Checkout'));
 
 import { checkSession, addInquiry, addOrder } from './admin/adminStore';
 
@@ -35,8 +35,6 @@ function PublicApp() {
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(false);
-  const [introPlayed, setIntroPlayed] = useState(false);
 
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem("aetheris_cart");
@@ -89,12 +87,7 @@ function PublicApp() {
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  // Navbar visibility after intro
-  useEffect(() => {
-    if (introPlayed) {
-      setShowNavbar(true);
-    }
-  }, [introPlayed]);
+
 
   // Lock body scroll when any overlay is active
   useEffect(() => {
@@ -175,7 +168,7 @@ function PublicApp() {
         onCloseOverlay={closeOverlay}
         cartCount={totalCartCount}
         onCartClick={() => setCartOpen(true)}
-        visible={showNavbar}
+        visible={true}
         wishlist={wishlist}
         onToggleWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
@@ -183,9 +176,6 @@ function PublicApp() {
 
       <main className="flex-grow">
         <Home
-          introPlayed={introPlayed}
-          setIntroPlayed={setIntroPlayed}
-          setShowNavbar={setShowNavbar}
           wishlist={wishlist}
           onToggleWishlist={handleToggleWishlist}
           onAddToCart={handleAddToCart}
@@ -210,12 +200,14 @@ function PublicApp() {
               <X size={18} />
             </button>
             <div className="pt-16">
-              <Checkout
-                cart={cart}
-                setCart={setCart}
-                onClose={closeOverlay}
-                checkoutItem={checkoutItem}
-              />
+              <Suspense fallback={<div className="flex h-[80vh] items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin"></div></div>}>
+                <Checkout
+                  cart={cart}
+                  setCart={setCart}
+                  onClose={closeOverlay}
+                  checkoutItem={checkoutItem}
+                />
+              </Suspense>
             </div>
           </motion.div>
         )}
@@ -238,18 +230,20 @@ function PublicApp() {
               <ChevronLeft size={18} />
             </button>
             <div className="pt-16">
-              <ProductDetails
-                selectedProductId={selectedProductId}
-                onAddToCart={handleAddToCart}
-                onCheckout={(item) => {
-                  // Manually close detail without triggering history.back()
-                  setDetailOpen(false);
-                  setSelectedProductId(null);
-                  handleCartCheckout(item);
-                }}
-                onClose={handleCloseProductDetail}
-                onProductSelect={handleOpenProductDetail}
-              />
+              <Suspense fallback={<div className="flex h-[80vh] items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin"></div></div>}>
+                <ProductDetails
+                  selectedProductId={selectedProductId}
+                  onAddToCart={handleAddToCart}
+                  onCheckout={(item) => {
+                    // Manually close detail without triggering history.back()
+                    setDetailOpen(false);
+                    setSelectedProductId(null);
+                    handleCartCheckout(item);
+                  }}
+                  onClose={handleCloseProductDetail}
+                  onProductSelect={handleOpenProductDetail}
+                />
+              </Suspense>
             </div>
           </motion.div>
         )}
@@ -258,26 +252,30 @@ function PublicApp() {
       {/* Cart drawer */}
       <AnimatePresence>
         {cartOpen && (
-          <CartDrawer
-            isOpen={cartOpen}
-            onClose={() => setCartOpen(false)}
-            cartItems={cart}
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveItem={handleRemoveItem}
-            onCheckout={() => handleCartCheckout()}
-            onItemCheckout={(item) => handleCartCheckout(item)}
-          />
+          <Suspense fallback={null}>
+            <CartDrawer
+              isOpen={cartOpen}
+              onClose={() => setCartOpen(false)}
+              cartItems={cart}
+              onUpdateQuantity={handleUpdateQuantity}
+              onRemoveItem={handleRemoveItem}
+              onCheckout={() => handleCartCheckout()}
+              onItemCheckout={(item) => handleCartCheckout(item)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
       {/* Inquiry modal */}
       <AnimatePresence>
         {inquiryOpen && (
-          <InquiryModal
-            isOpen={inquiryOpen}
-            onClose={() => setInquiryOpen(false)}
-            productName={inquiryProduct}
-          />
+          <Suspense fallback={null}>
+            <InquiryModal
+              isOpen={inquiryOpen}
+              onClose={() => setInquiryOpen(false)}
+              productName={inquiryProduct}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
 
