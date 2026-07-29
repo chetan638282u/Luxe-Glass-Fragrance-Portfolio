@@ -1,12 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { gsap } from 'gsap';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 
+const WORDMARK_LETTERS = ['A', 'e', 't', 'h', 'e', 'r', 'i', 's'];
+const SLOT_LETTER_INDEX = 4; // The second "e" (0-indexed: A=0, e=1, t=2, h=3, e=4)
+
 export default function HeroSection({
   images = [],
+  onIntroComplete = () => {},
+  introPlayed = false,
+  setIntroPlayed = () => {},
 }) {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [introReady, setIntroReady] = useState(false);
+  const [slideshowActive, setSlideshowActive] = useState(false);
+  
+  // Start the slideshow exactly where the intro sequence ends (3rd image, index 2)
+  const [activeSlide, setActiveSlide] = useState(images.length > 2 ? 2 : (images.length > 0 ? images.length - 1 : 0));
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [slotRect, setSlotRect] = useState(null);
+
+  const containerRef = useRef(null);
+  const wordmarkRef = useRef(null);
+  const letterRefs = useRef([]);
+  const slotLetterRef = useRef(null);
+  const imageContainerRef = useRef(null);
+  const isFirstSlideshowRender = useRef(true);
+
+  // Stabilize callback refs
+  const onIntroCompleteRef = useRef(onIntroComplete);
+  const setIntroPlayedRef = useRef(setIntroPlayed);
+  useEffect(() => { onIntroCompleteRef.current = onIntroComplete; }, [onIntroComplete]);
+  useEffect(() => { setIntroPlayedRef.current = setIntroPlayed; }, [setIntroPlayed]);
 
   // Check prefers-reduced-motion
   useEffect(() => {
@@ -17,33 +42,297 @@ export default function HeroSection({
     return () => media.removeEventListener('change', listener);
   }, []);
 
-  // Preload first image for fast initial render
-  useEffect(() => {
-    if (images.length > 0) {
-      const img = new Image();
-      img.src = images[0];
-    }
-  }, [images]);
+  // Measure letter slot position
+  const measureSlot = useCallback(() => {
+    if (!slotLetterRef.current || !containerRef.current) return;
+    const slotEl = slotLetterRef.current;
+    const containerEl = containerRef.current;
+    const slotBounds = slotEl.getBoundingClientRect();
+    const containerBounds = containerEl.getBoundingClientRect();
+    setSlotRect({
+      top: slotBounds.top - containerBounds.top,
+      left: slotBounds.left - containerBounds.left,
+      width: slotBounds.width,
+      height: slotBounds.height,
+    });
+  }, []);
 
-  // Slideshow interval
   useEffect(() => {
-    if (images.length <= 1) return;
+    const timer = setTimeout(measureSlot, 100);
+    const observer = new ResizeObserver(measureSlot);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [measureSlot]);
+
+  // Preload images — only need first 3 for the intro, rest load in background
+  useEffect(() => {
+    if (introPlayed || prefersReducedMotion) {
+      setIntroReady(true);
+      return;
+    }
+    const toLoad = images.filter(Boolean);
+    if (toLoad.length === 0) { setIntroReady(true); return; }
+
+    const introCount = Math.min(3, toLoad.length);
+    let loadedIntro = 0;
+
+    // Load first 3 images (intro sequence)
+    toLoad.slice(0, 3).forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      const done = () => { loadedIntro++; if (loadedIntro >= introCount) setIntroReady(true); };
+      img.onload = done;
+      img.onerror = done;
+    });
+
+    // Load remaining images in background (no state tracking needed)
+    toLoad.slice(3).forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [images, introPlayed, prefersReducedMotion]);
+
+  // GSAP intro timeline
+  useEffect(() => {
+    if (!introReady || !slotRect) return;
+
+    if (introPlayed || prefersReducedMotion) {
+      setSlideshowActive(true);
+      onIntroCompleteRef.current();
+      return;
+    }
+
+    const imgContainer = imageContainerRef.current;
+    const wordmark = wordmarkRef.current;
+    if (!imgContainer || !wordmark) return;
+
+    const otherLetters = letterRefs.current.filter((_, i) => i !== SLOT_LETTER_INDEX);
+    const leftLetters = letterRefs.current.slice(0, SLOT_LETTER_INDEX);
+    const rightLetters = letterRefs.current.slice(SLOT_LETTER_INDEX + 1);
+    const slotLetter = slotLetterRef.current;
+
+    // Set image container to slot position initially
+    gsap.set(imgContainer, {
+      position: 'absolute',
+      top: slotRect.top,
+      left: slotRect.left,
+      width: slotRect.width,
+      height: slotRect.height,
+      opacity: 0,
+      overflow: 'hidden',
+      zIndex: 20,
+      borderRadius: '2px',
+    });
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setSlideshowActive(true);
+          setIntroPlayedRef.current(true);
+          onIntroCompleteRef.current();
+        },
+      });
+
+      // Step 1: Wordmark fade in
+      tl.fromTo(wordmark, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+
+      // Step 2: Zoom + letter removal
+      tl.to(wordmark, {
+        scale: 1.05,
+        duration: 0.7,
+        ease: 'power1.inOut',
+      }, '+=0.1');
+
+      tl.to(slotLetter, {
+        opacity: 0,
+        scale: 0.3,
+        duration: 0.5,
+        ease: 'power2.in',
+      }, '<0.1');
+
+      // Calculate extra space needed for a perfect square
+      const extraWidth = slotRect.height - slotRect.width;
+      const shiftAmount = extraWidth / 2;
+
+      // Part the remaining letters to create a square gap
+      tl.to(leftLetters, {
+        x: -shiftAmount,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, '<');
+
+      tl.to(rightLetters, {
+        x: shiftAmount,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, '<');
+
+      // Step 3: Fade in and expand image container to a perfect square simultaneously
+      tl.to(imgContainer, {
+        opacity: 1,
+        width: slotRect.height,
+        left: slotRect.left - shiftAmount,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, '<');
+
+      tl.to(imgContainer, {
+        boxShadow: '0 0 40px 5px rgba(235, 193, 102, 0.08)',
+        duration: 0.3,
+      }, '<0.2');
+
+      // Limit the intro cycle to 3 images to speed up loading
+      images.slice(0, 3).forEach((_, idx) => {
+        const imgEl = imgContainer.querySelector(`[data-slide-index="${idx}"]`);
+        if (!imgEl) return;
+
+        if (idx === 0) {
+          tl.set(imgEl, { opacity: 1 });
+          tl.to({}, { duration: 1 });
+        } else {
+          const prevEl = imgContainer.querySelector(`[data-slide-index="${idx - 1}"]`);
+          tl.to(prevEl, { opacity: 0, duration: 0.3, ease: 'power1.inOut' });
+          tl.to(imgEl, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, '<');
+          tl.to({}, { duration: 0.7 });
+        }
+      });
+
+      // Step 4: Zoom last image to fill the hero section (not fixed — stays in flow)
+      // Fade out all wordmark letters
+      tl.to([...otherLetters, slotLetter], {
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power3.inOut',
+      });
+
+      // Zoom image container to fully cover the background
+      tl.to(imgContainer, {
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '0px',
+        boxShadow: 'none',
+        duration: 1.2,
+        ease: 'power3.inOut',
+      }, '<');
+
+      // Fade out the wordmark container
+      tl.to(wordmark, {
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power3.inOut',
+      }, '<0.3');
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [introReady, slotRect, introPlayed, prefersReducedMotion, images]);
+
+  // Handle first slideshow render transition
+  useEffect(() => {
+    if (slideshowActive) {
+      const timer = setTimeout(() => {
+        isFirstSlideshowRender.current = false;
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [slideshowActive]);
+
+  // Step 5: Slideshow interval
+  useEffect(() => {
+    if (!slideshowActive || images.length <= 1) return;
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % images.length);
     }, 3800);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [slideshowActive, images.length]);
 
   return (
     <div id="home">
-      <div className="relative aspect-[9/16] md:aspect-video w-full flex items-center justify-center overflow-hidden bg-background">
+      <div
+        ref={containerRef}
+        className="relative aspect-[9/16] md:aspect-video w-full flex items-center justify-center overflow-hidden bg-background"
+      >
+      {/* Hero gradient backdrop during intro */}
+      {!slideshowActive && (
+        <div className="absolute inset-0 z-0 hero-gradient pointer-events-none" />
+      )}
+
+      {/* Wordmark Layer */}
+      {!slideshowActive && (
+        <div
+          ref={wordmarkRef}
+          className="relative z-10 select-none flex items-center justify-center"
+          style={{ transformOrigin: 'center center', opacity: 0 }}
+        >
+          <div className="flex items-baseline" style={{ fontSize: 'clamp(3rem, 14vw, 12rem)' }}>
+            {WORDMARK_LETTERS.map((letter, idx) => {
+              const isSlot = idx === SLOT_LETTER_INDEX;
+              return (
+                <span
+                  key={idx}
+                  ref={(el) => {
+                    letterRefs.current[idx] = el;
+                    if (isSlot) slotLetterRef.current = el;
+                  }}
+                  className="font-serif font-semibold text-on-background inline-block"
+                  style={{
+                    lineHeight: 1,
+                    letterSpacing: '-0.02em',
+                    ...(idx === 0 ? { WebkitTextStroke: '1px #eae1d7' } : {}),
+                  }}
+                >
+                  {letter}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Image container — positioned over the letter slot, zooms to fill hero */}
+      {!slideshowActive && slotRect && (
+        <div
+          ref={imageContainerRef}
+          style={{
+            position: 'absolute',
+            top: slotRect.top,
+            left: slotRect.left,
+            width: slotRect.width,
+            height: slotRect.height,
+            opacity: 0,
+            overflow: 'hidden',
+            zIndex: 20,
+            borderRadius: '2px',
+          }}
+        >
+          {images.map((src, idx) => (
+            <img
+              key={idx}
+              data-slide-index={idx}
+              src={src}
+              alt={`Perfume ${idx + 1}`}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ opacity: 0 }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Slideshow layer — absolute inside hero, scrolls away with the page */}
+      {slideshowActive && (
         <div className="absolute inset-0 z-0">
+          {/* Subtle gradient overlays for text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/40 z-10 pointer-events-none" />
 
           <AnimatePresence mode="popLayout">
             <motion.div
               key={activeSlide}
-              initial={{ opacity: 0 }}
+              initial={{ opacity: isFirstSlideshowRender.current ? 1 : 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.8, ease: 'easeInOut' }}
@@ -57,9 +346,11 @@ export default function HeroSection({
             </motion.div>
           </AnimatePresence>
         </div>
+      )}
 
-        {/* UI chrome */}
-        <AnimatePresence>
+      {/* UI chrome — absolute inside hero, scrolls away with the page */}
+      <AnimatePresence>
+        {slideshowActive && (
           <>
             {/* Floating glass card */}
             <motion.div
@@ -117,7 +408,8 @@ export default function HeroSection({
               ))}
             </div>
           </>
-        </AnimatePresence>
+        )}
+      </AnimatePresence>
       </div>
     </div>
   );
