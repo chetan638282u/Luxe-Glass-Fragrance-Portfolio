@@ -53,6 +53,16 @@ function PublicApp() {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryProduct, setInquiryProduct] = useState("");
 
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message) => {
+    const id = Date.now();
+    setToast({ id, message });
+    setTimeout(() => {
+      setToast((current) => (current?.id === id ? null : current));
+    }, 3000);
+  };
+
   useEffect(() => {
     localStorage.setItem("aetheris_wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
@@ -112,6 +122,8 @@ function PublicApp() {
   }, [activeOverlay, detailOpen, cartOpen, inquiryOpen]);
 
   const handleToggleWishlist = (productId) => {
+    const isRemoving = wishlist.includes(productId);
+    if (!isRemoving) showToast("Added to Wishlist");
     setWishlist((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
@@ -127,7 +139,7 @@ function PublicApp() {
       }
       return [...prevCart, { ...product, quantity: 1 }];
     });
-    setCartOpen(true);
+    showToast("Added to Bag");
   };
 
   const handleUpdateQuantity = (id, quantity) => {
@@ -294,6 +306,24 @@ function PublicApp() {
               productName={inquiryProduct}
             />
           </Suspense>
+        )}
+      </AnimatePresence>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            key={toast.id}
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-primary text-background px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 border border-primary/20 pointer-events-none"
+          >
+            <div className="w-5 h-5 rounded-full bg-background/20 flex items-center justify-center">
+              <span className="text-background text-[10px]">✓</span>
+            </div>
+            <span className="font-sans text-xs tracking-widest uppercase font-medium">{toast.message}</span>
+          </motion.div>
         )}
       </AnimatePresence>
 
