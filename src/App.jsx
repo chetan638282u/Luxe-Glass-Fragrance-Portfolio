@@ -247,9 +247,10 @@ function PublicApp() {
       </AnimatePresence>
 
       {/* ProductDetail overlay */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {detailOpen && selectedProductId && (
           <motion.div
+            key={selectedProductId}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
