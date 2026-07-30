@@ -111,7 +111,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
                   onClick={onCheckout}
                   className="w-full bg-primary text-background font-sans font-medium text-xs tracking-[0.2em] py-4 uppercase hover:bg-primary-container transition-all active:scale-95 duration-300"
                 >
-                  CHECKOUT
+                  CHECKOUT ALL
                 </button>
               </div>
             )}
