@@ -155,9 +155,13 @@ function PublicApp() {
     setCartOpen(false);
     setCheckoutItem(item);
     
-    // Preserve current history state (like {page: 'detail'}) when opening checkout
-    const currentState = window.history.state || {};
-    window.history.pushState(currentState, '', '#checkout');
+    if (detailOpen) {
+      setDetailOpen(false);
+      setSelectedProductId(null);
+      window.history.replaceState(null, '', '#checkout');
+    } else {
+      window.history.pushState(null, '', '#checkout');
+    }
     setActiveOverlay('checkout');
   };
 
