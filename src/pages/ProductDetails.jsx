@@ -22,7 +22,6 @@ export default function ProductDetails({ selectedProductId, onAddToCart, onCheck
 
   const handleCompanionSelect = (id) => {
     onProductSelect(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

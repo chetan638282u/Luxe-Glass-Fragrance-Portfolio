@@ -158,11 +158,18 @@ function PublicApp() {
     if (detailOpen) {
       setDetailOpen(false);
       setSelectedProductId(null);
-      window.history.replaceState(null, '', '#checkout');
+      // Delay history manipulation to allow React to unmount the current overlay
+      // This ensures iOS Safari takes a clean snapshot of the background for the swipe-back gesture
+      setTimeout(() => {
+        window.history.replaceState(null, '', '#checkout');
+        setActiveOverlay('checkout');
+      }, 300);
     } else {
-      window.history.pushState(null, '', '#checkout');
+      setTimeout(() => {
+        window.history.pushState(null, '', '#checkout');
+        setActiveOverlay('checkout');
+      }, 300);
     }
-    setActiveOverlay('checkout');
   };
 
   const handleInquireProduct = (name) => {
