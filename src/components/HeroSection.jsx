@@ -71,7 +71,7 @@ export default function HeroSection({
         setIntroPlayedRef.current(true);
         onIntroCompleteRef.current();
       }
-    }, 4500); // 4.5s max for intro
+    }, 6500); // 6.5s max for intro
     return () => clearTimeout(fallback);
   }, [slideshowActive]);
 
