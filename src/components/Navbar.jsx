@@ -279,6 +279,7 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
                               <button
                                 onClick={() => {
                                   onAddToCart({ ...item, price: item.price["50ml"], size: "50 ML" });
+                                  onToggleWishlist(item.id);
                                   setWishlistOpen(false);
                                 }}
                                 className="text-on-surface/50 hover:text-primary transition-colors p-2"
