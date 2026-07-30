@@ -246,19 +246,32 @@ function PublicApp() {
         )}
       </AnimatePresence>
 
-      {/* ProductDetail overlay */}
-      <AnimatePresence mode="wait">
+      {/* ProductDetail overlay backdrop */}
+      <AnimatePresence>
+        {detailOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-background"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ProductDetail overlay content */}
+      <AnimatePresence>
         {detailOpen && selectedProductId && (
           <motion.div
             key={selectedProductId}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
-            className="fixed inset-0 z-[60] overflow-y-auto bg-background"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[61] overflow-y-auto"
           >
             <button
               onClick={handleCloseProductDetail}
-              className="fixed top-4 right-4 z-[61] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
+              className="fixed top-4 right-4 z-[62] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
               aria-label="Back"
             >
               <ChevronLeft size={18} />
