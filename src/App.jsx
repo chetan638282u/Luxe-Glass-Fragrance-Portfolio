@@ -39,15 +39,30 @@ function PublicApp() {
   const [introPlayed, setIntroPlayed] = useState(false);
 
   const [cart, setCart] = useState(() => {
-    const saved = localStorage.getItem("aetheris_cart");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("aetheris_cart");
+      if (!saved || saved === "undefined") return [];
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      localStorage.removeItem("aetheris_cart");
+      return [];
+    }
   });
+
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutItem, setCheckoutItem] = useState(null);
 
   const [wishlist, setWishlist] = useState(() => {
-    const saved = localStorage.getItem("aetheris_wishlist");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("aetheris_wishlist");
+      if (!saved || saved === "undefined") return [];
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      localStorage.removeItem("aetheris_wishlist");
+      return [];
+    }
   });
 
   const [inquiryOpen, setInquiryOpen] = useState(false);
