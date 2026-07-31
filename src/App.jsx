@@ -1,5 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft } from 'lucide-react';
 import Navbar from './components/Navbar';
@@ -32,6 +32,8 @@ function ProtectedRoute() {
 }
 
 function PublicApp() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
@@ -97,22 +99,17 @@ function PublicApp() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  // PushState → detail sync
+  // Location state → detail sync
   useEffect(() => {
-    const onPopState = () => {
-      const state = window.history.state;
-      if (state?.page === 'detail') {
-        setSelectedProductId(state.productId);
-        setDetailOpen(true);
-      } else {
-        setDetailOpen(false);
-        setSelectedProductId(null);
-      }
-    };
-    window.addEventListener('popstate', onPopState);
-    onPopState();
-    return () => window.removeEventListener('popstate', onPopState);
-  }, []);
+    const state = location.state;
+    if (state?.page === 'detail') {
+      setSelectedProductId(state.productId);
+      setDetailOpen(true);
+    } else {
+      setDetailOpen(false);
+      setSelectedProductId(null);
+    }
+  }, [location.state]);
 
   // Navbar visibility after intro
   useEffect(() => {
@@ -176,12 +173,12 @@ function PublicApp() {
       // Delay history manipulation to allow React to unmount the current overlay
       // This ensures iOS Safari takes a clean snapshot of the background for the swipe-back gesture
       setTimeout(() => {
-        window.history.replaceState(null, '', '#checkout');
+        navigate('#checkout', { replace: true });
         setActiveOverlay('checkout');
       }, 300);
     } else {
       setTimeout(() => {
-        window.history.pushState(null, '', '#checkout');
+        navigate('#checkout');
         setActiveOverlay('checkout');
       }, 300);
     }
@@ -195,13 +192,11 @@ function PublicApp() {
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleOpenProductDetail = (id) => {
-    window.history.pushState({ page: 'detail', productId: id }, '');
-    setSelectedProductId(id);
-    setDetailOpen(true);
+    navigate(location.pathname + location.search + location.hash, { state: { page: 'detail', productId: id } });
   };
 
   const handleCloseProductDetail = () => {
-    window.history.back();
+    navigate(-1);
   };
 
   const closeOverlay = () => {
@@ -210,9 +205,9 @@ function PublicApp() {
       setSelectedProductId(null);
     }
     if (window.location.hash === '#checkout') {
-      window.history.back();
+      navigate(-1);
     } else if (window.location.hash) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      navigate(window.location.pathname + window.location.search, { replace: true });
       setActiveOverlay(null);
     }
   };
@@ -252,7 +247,7 @@ function PublicApp() {
             className="fixed inset-0 z-[70] overflow-y-auto bg-background"
           >
             <button
-              onClick={() => window.history.back()}
+              onClick={() => navigate(-1)}
               className="fixed top-4 right-4 z-[71] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
               aria-label="Close"
             >
@@ -263,7 +258,7 @@ function PublicApp() {
                 <Checkout
                   cart={cart}
                   setCart={setCart}
-                  onClose={() => window.history.back()}
+                  onClose={() => navigate(-1)}
                   checkoutItem={checkoutItem}
                 />
               </Suspense>
