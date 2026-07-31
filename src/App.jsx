@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, lazy, Suspense, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft } from 'lucide-react';
@@ -35,7 +35,14 @@ function PublicApp() {
   const navigate = useNavigate();
   const location = useLocation();
   const overlayScrollPositions = useRef({});
+  const detailScrollRef = useRef(null);
   const [activeOverlay, setActiveOverlay] = useState(null);
+
+  useLayoutEffect(() => {
+    if (detailScrollRef.current && selectedProductId) {
+      detailScrollRef.current.scrollTop = overlayScrollPositions.current[selectedProductId] || 0;
+    }
+  }, [selectedProductId]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
@@ -285,7 +292,6 @@ function PublicApp() {
       <AnimatePresence>
         {detailOpen && selectedProductId && (
           <motion.div
-            key={selectedProductId}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
@@ -296,13 +302,7 @@ function PublicApp() {
                 overlayScrollPositions.current[selectedProductId] = e.target.scrollTop;
               }
             }}
-            ref={(el) => {
-              if (el && selectedProductId) {
-                setTimeout(() => {
-                  if (el) el.scrollTop = overlayScrollPositions.current[selectedProductId] || 0;
-                }, 10);
-              }
-            }}
+            ref={detailScrollRef}
           >
             <button
               onClick={handleCloseProductDetail}
