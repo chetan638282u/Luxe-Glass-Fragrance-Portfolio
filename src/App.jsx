@@ -52,13 +52,14 @@ function PublicApp() {
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem("aetheris_cart");
-      if (!saved || saved === "undefined") return [];
-      const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) ? parsed : [];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
     } catch (e) {
-      localStorage.removeItem("aetheris_cart");
-      return [];
+      console.error("Failed to parse cart from localStorage", e);
     }
+    return [];
   });
 
   const [cartOpen, setCartOpen] = useState(false);
@@ -67,14 +68,34 @@ function PublicApp() {
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem("aetheris_wishlist");
-      if (!saved || saved === "undefined") return [];
-      const parsed = JSON.parse(saved);
-      return Array.isArray(parsed) ? parsed : [];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
     } catch (e) {
-      localStorage.removeItem("aetheris_wishlist");
-      return [];
+      console.error("Failed to parse wishlist from localStorage", e);
     }
+    return [];
   });
+
+  const isCartMounted = useRef(false);
+  const isWishlistMounted = useRef(false);
+
+  useEffect(() => {
+    if (!isWishlistMounted.current) {
+      isWishlistMounted.current = true;
+      return;
+    }
+    localStorage.setItem("aetheris_wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  useEffect(() => {
+    if (!isCartMounted.current) {
+      isCartMounted.current = true;
+      return;
+    }
+    localStorage.setItem("aetheris_cart", JSON.stringify(cart));
+  }, [cart]);
 
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryProduct, setInquiryProduct] = useState("");
@@ -88,14 +109,6 @@ function PublicApp() {
       setToast((current) => (current?.id === id ? null : current));
     }, 3000);
   };
-
-  useEffect(() => {
-    localStorage.setItem("aetheris_wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
-
-  useEffect(() => {
-    localStorage.setItem("aetheris_cart", JSON.stringify(cart));
-  }, [cart]);
 
   // Hash → overlay sync
   useEffect(() => {
@@ -163,15 +176,6 @@ function PublicApp() {
     showToast("Added to Bag");
   };
 
-  const handleUpdateQuantity = (id, quantity) => {
-    if (quantity <= 0) { handleRemoveItem(id); return; }
-    setCart((prevCart) => prevCart.map((item) => (item.id === id ? { ...item, quantity } : item)));
-  };
-
-  const handleRemoveItem = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-  };
-
   const handleCartCheckout = (item = null) => {
     setCheckoutItem(item);
     
@@ -235,35 +239,60 @@ function PublicApp() {
         />
       </main>
 
+      {/* Cart drawer */}
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {cartOpen && (
+            <CartDrawer
+              isOpen={cartOpen}
+              onClose={() => setCartOpen(false)}
+              cartItems={cart}
+              onUpdateQuantity={(id, quantity) => {
+                if (quantity < 1) {
+                  setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+                } else {
+                  setCart((prevCart) => prevCart.map((item) => (item.id === id ? { ...item, quantity } : item)));
+                }
+              }}
+              onRemoveItem={(id) => {
+                setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+              }}
+              onCheckout={() => handleCartCheckout(null)}
+              onItemCheckout={(item) => handleCartCheckout(item)}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
+
       {/* Checkout overlay */}
-      <AnimatePresence>
-        {activeOverlay === 'checkout' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
-            className="fixed inset-0 z-[70] overflow-y-auto bg-background"
-          >
-            <button
-              onClick={() => navigate(-1)}
-              className="fixed top-4 right-4 z-[71] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
-              aria-label="Close"
+      <Suspense fallback={<div className="fixed inset-0 z-[70] bg-background flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin"></div></div>}>
+        <AnimatePresence>
+          {activeOverlay === 'checkout' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
+              className="fixed inset-0 z-[70] overflow-y-auto bg-background"
             >
-              <X size={18} />
-            </button>
-            <div className="pt-16">
-              <Suspense fallback={<div className="flex h-[80vh] items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin"></div></div>}>
+              <button
+                onClick={() => navigate(-1)}
+                className="fixed top-4 right-4 z-[71] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+              <div className="pt-16">
                 <Checkout
                   cart={cart}
                   setCart={setCart}
                   onClose={() => navigate(-1)}
                   checkoutItem={checkoutItem}
                 />
-              </Suspense>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Suspense>
 
       {/* ProductDetail overlay backdrop */}
       <AnimatePresence>
