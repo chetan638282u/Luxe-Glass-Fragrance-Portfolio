@@ -173,24 +173,12 @@ function PublicApp() {
   };
 
   const handleCartCheckout = (item = null) => {
-    setCartOpen(false);
     setCheckoutItem(item);
     
-    if (detailOpen) {
-      setDetailOpen(false);
-      setSelectedProductId(null);
-      // Delay history manipulation to allow React to unmount the current overlay
-      // This ensures iOS Safari takes a clean snapshot of the background for the swipe-back gesture
-      setTimeout(() => {
-        navigate('#checkout', { replace: true });
-        setActiveOverlay('checkout');
-      }, 300);
-    } else {
-      setTimeout(() => {
-        navigate('#checkout');
-        setActiveOverlay('checkout');
-      }, 300);
-    }
+    // Navigate to checkout while preserving location.state.
+    // By NOT setting cartOpen or detailOpen to false, these overlays 
+    // remain mounted in the background perfectly intact.
+    navigate('#checkout', { state: location.state });
   };
 
   const handleInquireProduct = (name) => {
