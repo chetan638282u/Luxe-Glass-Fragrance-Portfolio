@@ -38,13 +38,14 @@ function PublicApp() {
   const detailScrollRef = useRef(null);
   const [activeOverlay, setActiveOverlay] = useState(null);
 
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+
   useLayoutEffect(() => {
     if (detailScrollRef.current && selectedProductId) {
       detailScrollRef.current.scrollTop = overlayScrollPositions.current[selectedProductId] || 0;
     }
   }, [selectedProductId]);
-  const [selectedProductId, setSelectedProductId] = useState(null);
-  const [detailOpen, setDetailOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(false);
   const [introPlayed, setIntroPlayed] = useState(false);
 
