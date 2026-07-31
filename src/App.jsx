@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft } from 'lucide-react';
@@ -34,6 +34,7 @@ function ProtectedRoute() {
 function PublicApp() {
   const navigate = useNavigate();
   const location = useLocation();
+  const overlayScrollPositions = useRef({});
   const [activeOverlay, setActiveOverlay] = useState(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
@@ -192,6 +193,7 @@ function PublicApp() {
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleOpenProductDetail = (id) => {
+    overlayScrollPositions.current[id] = 0;
     navigate(location.pathname + location.search + location.hash, { state: { page: 'detail', productId: id } });
   };
 
@@ -289,6 +291,18 @@ function PublicApp() {
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[61] overflow-y-auto"
+            onScroll={(e) => {
+              if (selectedProductId) {
+                overlayScrollPositions.current[selectedProductId] = e.target.scrollTop;
+              }
+            }}
+            ref={(el) => {
+              if (el && selectedProductId) {
+                setTimeout(() => {
+                  if (el) el.scrollTop = overlayScrollPositions.current[selectedProductId] || 0;
+                }, 10);
+              }
+            }}
           >
             <button
               onClick={handleCloseProductDetail}
