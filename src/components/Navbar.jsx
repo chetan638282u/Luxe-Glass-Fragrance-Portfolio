@@ -3,7 +3,7 @@ import { ShoppingBag, Heart, Search, Menu, X, X as XIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../products';
 
-export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCartClick, visible = true, wishlist = [], onToggleWishlist, onAddToCart }) {
+export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCartClick, visible = true, wishlist = [], onToggleWishlist, onAddToCart, onProductSelect }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -206,7 +206,15 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
                   >
                     <div className="max-h-80 overflow-y-auto">
                       {searchResults.slice(0, 6).map((item) => (
-                        <div key={item.id} className="flex items-center gap-4 px-5 py-3 hover:bg-white/5 transition-colors border-b border-primary/5 last:border-b-0 cursor-pointer">
+                        <div 
+                          key={item.id} 
+                          className="flex items-center gap-4 px-5 py-3 hover:bg-white/5 transition-colors border-b border-primary/5 last:border-b-0 cursor-pointer"
+                          onClick={() => {
+                            if (onProductSelect) onProductSelect(item.id);
+                            setSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                        >
                           <div className="w-10 h-12 flex-shrink-0 overflow-hidden rounded-sm bg-surface-container-low">
                             <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                           </div>

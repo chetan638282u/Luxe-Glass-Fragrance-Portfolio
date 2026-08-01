@@ -233,6 +233,7 @@ function PublicApp() {
         wishlist={wishlist}
         onToggleWishlist={handleToggleWishlist}
         onAddToCart={handleAddToCart}
+        onProductSelect={handleOpenProductDetail}
       />
 
       <main className="flex-grow">
