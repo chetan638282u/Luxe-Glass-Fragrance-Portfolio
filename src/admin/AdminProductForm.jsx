@@ -23,6 +23,7 @@ export default function AdminProductForm() {
     notesTop: existing?.notes?.top || '',
     notesHeart: existing?.notes?.heart || '',
     notesBase: existing?.notes?.base || '',
+    image: existing?.image || '',
   });
 
   const handleChange = (field) => (e) => {
@@ -32,6 +33,17 @@ export default function AdminProductForm() {
       [field]: value,
       ...(field === 'name' && !isEdit ? { slug: value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') } : {}),
     }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm(prev => ({ ...prev, image: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -45,7 +57,7 @@ export default function AdminProductForm() {
       price: { "50ml": Number(form.price50), "100ml": Number(form.price100) },
       stock: Number(form.stock),
       notes: { top: form.notesTop, heart: form.notesHeart, base: form.notesBase },
-      image: existing?.image || '',
+      image: form.image,
     };
 
     if (isEdit) {
@@ -138,6 +150,24 @@ export default function AdminProductForm() {
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Base Notes</label>
               <input type="text" value={form.notesBase} onChange={handleChange('notesBase')}
                 className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+            </div>
+          </div>
+        </div>
+
+        {/* Image Upload */}
+        <div className="border-t border-primary/10 pt-6">
+          <h3 className="font-sans text-[10px] text-primary uppercase tracking-widest mb-4">Product Image</h3>
+          <div className="flex items-center gap-6">
+            {form.image && (
+              <div className="w-24 h-24 rounded-sm border border-primary/20 overflow-hidden flex-shrink-0 bg-[#1c1912]/40">
+                <img src={form.image} alt="Preview" className="w-full h-full object-cover" />
+              </div>
+            )}
+            <div className="flex-1">
+              <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-2">Upload Image</label>
+              <input type="file" accept="image/*" onChange={handleImageUpload}
+                className="w-full text-sm text-on-surface/60 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-sans file:uppercase file:tracking-widest file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors cursor-pointer" />
+              <p className="text-[10px] text-on-surface/40 mt-2">Recommended: Square image, max 2MB.</p>
             </div>
           </div>
         </div>

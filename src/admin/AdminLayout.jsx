@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
     : 'dashboard';
 
   const handleNav = (path) => {
-    const base = location.pathname.split('/').slice(0, -1).join('/') || '/';
+    const base = `/${location.pathname.split('/')[1]}`;
     navigate(`${base}/${path}`);
   };
 
