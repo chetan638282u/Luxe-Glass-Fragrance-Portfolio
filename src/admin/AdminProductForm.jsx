@@ -89,27 +89,27 @@ export default function AdminProductForm() {
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Name</label>
             <input type="text" value={form.name} onChange={handleChange('name')} required
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Slug</label>
             <input type="text" value={form.slug} onChange={handleChange('slug')} required
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div className="md:col-span-2">
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Tagline</label>
             <input type="text" value={form.tagline} onChange={handleChange('tagline')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div className="md:col-span-2">
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Description</label>
             <textarea rows={3} value={form.description} onChange={handleChange('description')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors resize-none" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors resize-none" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Category</label>
             <select value={form.category} onChange={handleChange('category')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors appearance-none cursor-pointer">
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors appearance-none cursor-pointer">
               {categories.map(c => <option key={c} value={c} className="bg-background text-on-background">{c}</option>)}
             </select>
           </div>
@@ -117,18 +117,18 @@ export default function AdminProductForm() {
             <div>
               <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Price (50ml)</label>
               <input type="number" step="0.01" value={form.price50} onChange={handleChange('price50')} required
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
             <div>
               <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Price (100ml)</label>
               <input type="number" step="0.01" value={form.price100} onChange={handleChange('price100')}
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Stock</label>
             <input type="number" value={form.stock} onChange={handleChange('stock')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
         </div>
 
@@ -139,17 +139,17 @@ export default function AdminProductForm() {
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Top Notes</label>
               <input type="text" value={form.notesTop} onChange={handleChange('notesTop')}
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Heart Notes</label>
               <input type="text" value={form.notesHeart} onChange={handleChange('notesHeart')}
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Base Notes</label>
               <input type="text" value={form.notesBase} onChange={handleChange('notesBase')}
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function AdminProductForm() {
           <h3 className="font-sans text-[10px] text-primary uppercase tracking-widest mb-4">Product Image</h3>
           <div className="flex items-center gap-6">
             {form.image && (
-              <div className="w-24 h-24 rounded-sm border border-primary/20 overflow-hidden flex-shrink-0 bg-[#1c1912]/40">
+              <div className="w-24 h-24 rounded-sm border border-primary/20 overflow-hidden flex-shrink-0 bg-surface-container/50">
                 <img src={form.image} alt="Preview" className="w-full h-full object-cover" />
               </div>
             )}

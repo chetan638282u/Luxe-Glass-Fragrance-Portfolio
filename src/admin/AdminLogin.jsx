@@ -64,7 +64,7 @@ export default function AdminLogin() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#1c1912]/40 border border-primary/20 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors"
+                className="w-full bg-surface-container/50 border border-primary/20 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors"
                 placeholder="Enter access code"
                 autoFocus
               />

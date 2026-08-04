@@ -60,22 +60,22 @@ export default function AdminSettings() {
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Store Name</label>
             <input type="text" value={form.storeName} onChange={handleChange('storeName')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Contact Email</label>
             <input type="email" value={form.contactEmail} onChange={handleChange('contactEmail')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Phone</label>
             <input type="text" value={form.contactPhone} onChange={handleChange('contactPhone')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-primary uppercase tracking-widest block mb-1">Address</label>
             <input type="text" value={form.address} onChange={handleChange('address')}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
         </div>
 
@@ -85,17 +85,17 @@ export default function AdminSettings() {
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Instagram</label>
               <input type="url" value={form.socialLinks.instagram} onChange={handleSocial('instagram')} placeholder="https://instagram.com/..."
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Twitter / X</label>
               <input type="url" value={form.socialLinks.twitter} onChange={handleSocial('twitter')} placeholder="https://twitter.com/..."
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
             <div>
               <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Facebook</label>
               <input type="url" value={form.socialLinks.facebook} onChange={handleSocial('facebook')} placeholder="https://facebook.com/..."
-                className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+                className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
             </div>
           </div>
         </div>
@@ -127,17 +127,17 @@ export default function AdminSettings() {
           <div>
             <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Current Access Code</label>
             <input type="password" value={passForm.current} onChange={(e) => setPassForm(p => ({ ...p, current: e.target.value }))} required
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">New Access Code</label>
             <input type="password" value={passForm.newPass} onChange={(e) => setPassForm(p => ({ ...p, newPass: e.target.value }))} required minLength={6}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <div>
             <label className="font-sans text-[9px] text-on-surface/40 uppercase tracking-widest block mb-1">Confirm New Access Code</label>
             <input type="password" value={passForm.confirm} onChange={(e) => setPassForm(p => ({ ...p, confirm: e.target.value }))} required minLength={6}
-              className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
+              className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 px-3 text-sm focus:outline-none transition-colors" />
           </div>
           <button type="submit"
             className="px-6 py-3 border border-primary/30 text-primary font-sans text-[10px] tracking-widest uppercase hover:bg-primary hover:text-background transition-all cursor-pointer">

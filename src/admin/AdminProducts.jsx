@@ -43,7 +43,7 @@ export default function AdminProducts() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search products..."
-          className="w-full bg-[#1c1912]/40 border border-primary/10 focus:border-primary text-on-background py-2.5 pl-9 pr-3 text-xs focus:outline-none transition-colors"
+          className="w-full bg-surface-container/50 border border-primary/10 focus:border-primary text-on-background py-2.5 pl-9 pr-3 text-xs focus:outline-none transition-colors"
         />
       </div>
 

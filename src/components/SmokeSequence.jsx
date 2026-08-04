@@ -112,7 +112,7 @@ export default function SmokeSequence() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full aspect-[9/16] md:aspect-video bg-black overflow-hidden">
+    <section ref={containerRef} className="relative w-full aspect-[9/16] md:aspect-video bg-background overflow-hidden">
       {/* Loading state for the first frame */}
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -137,7 +137,7 @@ export default function SmokeSequence() {
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20"
         style={{ transition: 'opacity 0.6s ease' }}
       >
-        <h2 className="font-serif text-4xl md:text-6xl text-white opacity-80 mix-blend-overlay tracking-wide drop-shadow-2xl text-center">
+        <h2 className="font-serif text-4xl md:text-6xl text-on-background opacity-80 mix-blend-overlay tracking-wide drop-shadow-2xl text-center">
           Emerging from the Void
         </h2>
       </div>

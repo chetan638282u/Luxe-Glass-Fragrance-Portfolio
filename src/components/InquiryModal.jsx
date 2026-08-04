@@ -64,7 +64,7 @@ export default function InquiryModal({ isOpen, onClose, productName = "" }) {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
+                  className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
                   placeholder="Evelyn Vane"
                 />
               </div>
@@ -76,7 +76,7 @@ export default function InquiryModal({ isOpen, onClose, productName = "" }) {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
+                  className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
                   placeholder="evelyn@domain.com"
                 />
               </div>
@@ -88,7 +88,7 @@ export default function InquiryModal({ isOpen, onClose, productName = "" }) {
                   required
                   value={formData.notes}
                   onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                  className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors resize-none"
+                  className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors resize-none"
                 />
               </div>
 

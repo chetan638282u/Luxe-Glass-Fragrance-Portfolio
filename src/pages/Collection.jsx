@@ -86,13 +86,13 @@ export default function Collection({ isSection = false, onProductSelect, wishlis
                 />
                 <button
                   onClick={(e) => { e.stopPropagation(); onToggleWishlist(prod.id); }}
-                  className="absolute top-3 right-3 p-2 rounded-full bg-black/30 backdrop-blur-sm hover:bg-black/50 transition-all z-10 cursor-pointer"
+                  className="absolute top-3 right-3 p-2 rounded-full bg-surface/60 backdrop-blur-sm hover:bg-black/50 transition-all z-10 cursor-pointer"
                   aria-label={wishlist.includes(prod.id) ? "Remove from wishlist" : "Add to wishlist"}
                 >
                   <Heart
                     size={16}
                     className={`transition-colors ${
-                      wishlist.includes(prod.id) ? 'text-primary' : 'text-white/80'
+                      wishlist.includes(prod.id) ? 'text-primary' : 'text-on-surface/60'
                     }`}
                     style={wishlist.includes(prod.id) ? { fill: '#ebc166' } : { fill: 'none' }}
                   />
