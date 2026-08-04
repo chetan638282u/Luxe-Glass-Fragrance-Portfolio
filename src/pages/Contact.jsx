@@ -92,7 +92,7 @@ export default function Contact({ isSection = false }) {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
+                        className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
                         placeholder="Marcus Aurelius"
                       />
                     </div>
@@ -104,7 +104,7 @@ export default function Contact({ isSection = false }) {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
+                        className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors"
                         placeholder="marcus@empire.com"
                       />
                     </div>
@@ -132,7 +132,7 @@ export default function Contact({ isSection = false }) {
                       required
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full bg-surface-container/50 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors resize-none"
+                      className="w-full bg-[#1c1912]/40 border-b border-primary/20 focus:border-primary text-on-background py-2 text-sm focus:outline-none transition-colors resize-none"
                       placeholder="Detail your request..."
                     />
                   </div>

@@ -2,24 +2,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #9E6749;
-  --color-primary-container: #C98E6C;
-  --color-background: #DCD3C6;
-  --color-on-background: #2C2824;
-  --color-surface: #EBE5DF;
-  --color-on-surface: #2C2824;
-  --color-on-surface-variant: #7A7067;
-  --color-secondary: #8F8274;
-  --color-secondary-container: #C5B9AC;
-  --color-tertiary: #7D6B66;
-  --color-tertiary-container: #BFAFA9;
-  --color-outline: #C7BEB3;
-  --color-outline-variant: #A99D90;
-  --color-surface-container: #E3DBD1;
-  --color-surface-container-high: #DFD6CB;
-  --color-surface-container-highest: #DBD1C5;
-  --color-surface-container-low: #EBE5DF;
-  --color-surface-container-lowest: #F2ECE7;
+  --color-primary: #ebc166;
+  --color-primary-container: #c9a24b;
+  --color-background: #0D0C0B;
+  --color-on-background: #eae1d7;
+  --color-surface: #16130d;
+  --color-on-surface: #eae1d7;
+  --color-on-surface-variant: #d1c5b2;
+  --color-secondary: #cfc5b5;
+  --color-secondary-container: #4e483c;
+  --color-tertiary: #eabcb4;
+  --color-tertiary-container: #3a1f1a;
+  --color-outline: #9a8f7e;
+  --color-outline-variant: #4e4637;
+  --color-surface-container: #231f19;
+  --color-surface-container-high: #2d2923;
+  --color-surface-container-highest: #38342d;
+  --color-surface-container-low: #1f1b15;
+  --color-surface-container-lowest: #110e08;
 
   --font-serif: 'Bodoni Moda', serif;
   --font-sans: 'DM Sans', sans-serif;
@@ -35,14 +35,14 @@ html, body {
   max-width: 100%;
   overflow-x: clip;
   overscroll-behavior-y: none;
-  background-color: #DCD3C6;
+  background-color: #0D0C0B;
 }
 
 
 
 body {
-  background-color: #DCD3C6;
-  color: #2C2824;
+  background-color: #0D0C0B;
+  color: #eae1d7;
   font-family: var(--font-sans);
 }
 
@@ -51,29 +51,33 @@ h1, h2, h3, h4, .font-editorial {
 }
 
 .glass-panel {
-  background-color: #EBE5DF;
-  border: 1px solid rgba(158, 103, 73, 0.15);
+  background-color: rgba(22, 19, 13, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(235, 193, 102, 0.08);
 }
 
 .glass-panel-heavy {
-  background-color: #F2ECE7;
-  border: 1px solid rgba(158, 103, 73, 0.25);
+  background-color: rgba(13, 12, 11, 0.85);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(235, 193, 102, 0.15);
 }
 
 .gold-glow {
-  box-shadow: 0 0 60px 5px rgba(158, 103, 73, 0.1);
+  box-shadow: 0 0 60px 5px rgba(235, 193, 102, 0.03);
 }
 
 .hero-gradient {
-  background: radial-gradient(circle at center, rgba(158, 103, 73, 0.1) 0%, rgba(220, 211, 198, 1) 75%);
+  background: radial-gradient(circle at center, rgba(235, 193, 102, 0.1) 0%, rgba(13, 12, 11, 1) 75%);
 }
 
 .burgundy-gradient {
-  background: radial-gradient(circle at center, rgba(125, 107, 102, 0.1) 0%, rgba(220, 211, 198, 1) 75%);
+  background: radial-gradient(circle at center, rgba(120, 40, 30, 0.08) 0%, rgba(13, 12, 11, 1) 75%);
 }
 
 .amber-gradient {
-  background: radial-gradient(circle at center, rgba(158, 103, 73, 0.08) 0%, rgba(220, 211, 198, 1) 75%);
+  background: radial-gradient(circle at center, rgba(201, 162, 75, 0.06) 0%, rgba(13, 12, 11, 1) 75%);
 }
 
 /* Custom transitions and animations */
@@ -91,14 +95,14 @@ h1, h2, h3, h4, .font-editorial {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #DCD3C6;
+  background: #0D0C0B;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(158, 103, 73, 0.2);
+  background: rgba(235, 193, 102, 0.2);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(158, 103, 73, 0.4);
+  background: rgba(235, 193, 102, 0.4);
 }
 
 .no-scrollbar::-webkit-scrollbar {
