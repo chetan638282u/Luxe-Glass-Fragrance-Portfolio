@@ -256,6 +256,7 @@ function PublicApp() {
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             className="fixed inset-0 z-[70] overflow-y-auto overscroll-y-contain bg-background"
+            data-lenis-prevent="true"
           >
             <button
               onClick={() => navigate(-1)}
@@ -299,6 +300,7 @@ function PublicApp() {
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[61] overflow-y-auto overscroll-y-contain"
+            data-lenis-prevent="true"
             onScroll={(e) => {
               if (selectedProductId) {
                 overlayScrollPositions.current[selectedProductId] = e.target.scrollTop;
