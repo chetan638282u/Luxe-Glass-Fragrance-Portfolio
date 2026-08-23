@@ -40,7 +40,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantit
             </div>
 
             {/* Cart Items List */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 no-scrollbar divide-y divide-primary/5">
+            <div className="flex-1 overflow-y-auto overscroll-y-contain px-6 py-4 no-scrollbar divide-y divide-primary/5">
               {cartItems.length === 0 ? (
                 <div className="h-full flex flex-col justify-center items-center text-center space-y-4">
                   <p className="font-serif text-lg text-on-surface-variant font-light">Your bag is empty.</p>

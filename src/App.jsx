@@ -255,7 +255,7 @@ function PublicApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
-            className="fixed inset-0 z-[70] overflow-y-auto bg-background"
+            className="fixed inset-0 z-[70] overflow-y-auto overscroll-y-contain bg-background"
           >
             <button
               onClick={() => navigate(-1)}
@@ -298,7 +298,7 @@ function PublicApp() {
             animate={{ opacity: 1 }}
             exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[61] overflow-y-auto"
+            className="fixed inset-0 z-[61] overflow-y-auto overscroll-y-contain"
             onScroll={(e) => {
               if (selectedProductId) {
                 overlayScrollPositions.current[selectedProductId] = e.target.scrollTop;
