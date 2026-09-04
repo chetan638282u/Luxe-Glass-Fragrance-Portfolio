@@ -170,12 +170,12 @@ export default function HeroSection({
 
         if (idx === 0) {
           tl.set(imgEl, { opacity: 1 });
-          tl.to({}, { duration: 1 });
+          tl.to({}, { duration: 0.4 });
         } else {
           const prevEl = imgContainer.querySelector(`[data-slide-index="${idx - 1}"]`);
-          tl.to(prevEl, { opacity: 0, duration: 0.3, ease: 'power1.inOut' });
-          tl.to(imgEl, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, '<');
-          tl.to({}, { duration: 0.7 });
+          tl.to(prevEl, { opacity: 0, duration: 0.15, ease: 'power1.inOut' });
+          tl.to(imgEl, { opacity: 1, duration: 0.15, ease: 'power1.inOut' }, '<');
+          tl.to({}, { duration: 0.3 });
         }
       });
 
