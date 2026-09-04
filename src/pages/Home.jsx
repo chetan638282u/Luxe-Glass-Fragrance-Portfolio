@@ -66,6 +66,15 @@ export default function Home({
         </div>
       </section>
 
+      {/* Ingredients Intro / Separator */}
+      <section className="py-16 px-6 max-w-3xl mx-auto text-center md:py-24">
+        <span className="font-sans text-[10px] text-primary uppercase tracking-widest block mb-3 md:mb-4">THE ELEMENTS</span>
+        <h2 className="font-serif text-2xl md:text-4xl text-on-background mb-4 md:mb-6">Raw Materials of Prestige</h2>
+        <p className="font-sans text-sm md:text-base text-on-surface-variant font-light leading-relaxed">
+          We source ingredients of unparalleled purity. From the deep forests of Cambodia to moonlit botanical gardens, discover the rare elements that compose our olfactory masterpieces.
+        </p>
+      </section>
+
       {/* Sticky Scroll Ingredients Section */}
       <Suspense fallback={null}>
         <IngredientsSection />
