@@ -230,7 +230,7 @@ export default function Collection({ onClose, onProductSelect, wishlist = [], on
               <span className="font-sans text-[10px] text-on-surface/50 tracking-widest uppercase mb-1">{filteredProducts.length} Results</span>
             </div>
 
-            <div className="p-6 space-y-8 flex-1 overflow-y-auto">
+            <div className="p-6 space-y-8 flex-1 overflow-y-auto overscroll-contain">
               {/* Price Range */}
               <div>
                 <div className="flex justify-between items-end mb-4 pb-2 border-b border-primary/5">
