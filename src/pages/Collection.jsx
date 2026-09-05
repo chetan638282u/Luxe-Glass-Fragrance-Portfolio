@@ -118,18 +118,18 @@ export default function Collection({ onClose, onProductSelect, wishlist = [], on
   };
 
   return (
-    <div className="min-h-screen bg-background relative pt-20 pb-24">
+    <div className="min-h-screen bg-background relative pt-20 pb-24 lg:pr-80">
       {onClose && (
         <button
           onClick={onClose}
-          className="fixed top-4 right-4 z-[71] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
+          className="fixed top-4 right-4 z-[100] w-10 h-10 flex items-center justify-center bg-background/80 backdrop-blur-sm border border-primary/20 rounded-full text-primary hover:bg-primary hover:text-background transition-all cursor-pointer"
           aria-label="Close"
         >
           <X size={18} />
         </button>
       )}
 
-      <div className="px-6 max-w-[1400px] mx-auto">
+      <div className="px-6 max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="font-serif text-4xl md:text-6xl text-primary mb-4">
@@ -140,10 +140,9 @@ export default function Collection({ onClose, onProductSelect, wishlist = [], on
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-          
+        <div className="w-full">
           {/* Product Grid Container (Left) */}
-          <div className="flex-1 w-full">
+          <div className="w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-gutter">
               <AnimatePresence>
                 {filteredProducts.map((prod, idx) => {
@@ -225,13 +224,13 @@ export default function Collection({ onClose, onProductSelect, wishlist = [], on
           </div>
 
           {/* Permanent Sidebar (Right) */}
-          <aside className="w-full lg:w-72 xl:w-80 flex-shrink-0 lg:sticky lg:top-24 bg-surface-container-low border border-primary/10 rounded-sm overflow-hidden">
-            <div className="p-6 border-b border-primary/10 flex justify-between items-end">
+          <aside className="fixed top-0 right-0 h-[100vh] w-full lg:w-80 bg-surface-container-low border-l border-primary/10 flex flex-col z-[60] shadow-2xl lg:shadow-none">
+            <div className="p-6 pt-24 border-b border-primary/10 flex justify-between items-end flex-shrink-0">
               <h3 className="font-serif text-2xl text-primary tracking-wider">FILTER</h3>
               <span className="font-sans text-[10px] text-on-surface/50 tracking-widest uppercase mb-1">{filteredProducts.length} Results</span>
             </div>
 
-            <div className="p-6 space-y-8">
+            <div className="p-6 space-y-8 flex-1 overflow-y-auto">
               {/* Price Range */}
               <div>
                 <div className="flex justify-between items-end mb-4 pb-2 border-b border-primary/5">
@@ -286,7 +285,7 @@ export default function Collection({ onClose, onProductSelect, wishlist = [], on
               </Accordion>
             </div>
 
-            <div className="p-6 border-t border-primary/10 bg-background/50">
+            <div className="p-6 border-t border-primary/10 bg-background/50 flex-shrink-0">
               <button 
                 onClick={clearFilters}
                 className="w-full py-3 font-sans text-xs tracking-widest uppercase border border-primary/20 text-on-surface/70 hover:text-primary hover:border-primary/50 transition-all cursor-pointer"
