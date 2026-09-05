@@ -21,7 +21,9 @@ export const products = {
       top: "Saffron, Black Pepper, Bergamot",
       heart: "Turkish Rose, Midnight Jasmine, Patchouli",
       base: "Cambodian Oud, Ambergris, Smoked Leather"
-    }
+    },
+    occasion: "club",
+    gender: "Unisex"
   },
   "vetiver-noir": {
     id: "vetiver-noir",
@@ -36,7 +38,9 @@ export const products = {
       top: "Bergamot, Grapefruit, Pink Pepper",
       heart: "Haitian Vetiver, Nutmeg, Geranium",
       base: "Smoked Cedar, Patchouli, Benzoin"
-    }
+    },
+    occasion: "casual",
+    gender: "Masculine"
   },
   "midnight-iris": {
     id: "midnight-iris",
@@ -51,7 +55,9 @@ export const products = {
       top: "Cold Aldehydes, Violet Leaves",
       heart: "Florentine Iris Butter, Orris Root",
       base: "White Musk, Cashmere Wood, Ambrette"
-    }
+    },
+    occasion: "party",
+    gender: "Feminine"
   },
   "oud-obscure": {
     id: "oud-obscure",
@@ -66,7 +72,9 @@ export const products = {
       top: "Saffron, Cinnamon, Cloves",
       heart: "Agarwood (Oud), Rose Absolute",
       base: "Ambergris, Vanilla Pod, Labdanum"
-    }
+    },
+    occasion: "club",
+    gender: "Masculine"
   },
   "neroli-blanc": {
     id: "neroli-blanc",
@@ -81,7 +89,9 @@ export const products = {
       top: "Sicilian Bergamot, Mandarin",
       heart: "Tunisian Neroli, Orange Blossom",
       base: "White Musk, Amber, Cedarwood"
-    }
+    },
+    occasion: "sports",
+    gender: "Unisex"
   },
   "vetiver-obscura": {
     id: "vetiver-obscura",
@@ -96,7 +106,9 @@ export const products = {
       top: "Cardamom, Smoked Earth",
       heart: "Black Iris, Violet, Vetiver Root",
       base: "Smoked Birch, Leather, Amber"
-    }
+    },
+    occasion: "casual",
+    gender: "Unisex"
   },
   "aurum": {
     id: "aurum",
@@ -111,7 +123,9 @@ export const products = {
       top: "Saffron, Bergamot, Pink Pepper",
       heart: "Liquid Gold Accord, Jasmine, Patchouli",
       base: "Cambodian Oud, Amber, Sandalwood"
-    }
+    },
+    occasion: "party",
+    gender: "Unisex"
   },
   "silent-musk": {
     id: "silent-musk",
@@ -126,6 +140,8 @@ export const products = {
       top: "White Ambrette, Pink Grapefruit",
       heart: "Cashmere Wood, Iso E Super",
       base: "White Musk, Vetiver, Sandalwood"
-    }
+    },
+    occasion: "office",
+    gender: "Feminine"
   }
 };

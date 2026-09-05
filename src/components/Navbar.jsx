@@ -96,9 +96,9 @@ export default function Navbar({ activeOverlay, onCloseOverlay, cartCount, onCar
     if (id === 'collection') {
       if (activeOverlay) {
         onCloseOverlay();
-        setTimeout(() => scrollToSection(id), 100);
+        setTimeout(() => window.location.hash = '#collection', 100);
       } else {
-        scrollToSection(id);
+        window.location.hash = '#collection';
       }
       return;
     }

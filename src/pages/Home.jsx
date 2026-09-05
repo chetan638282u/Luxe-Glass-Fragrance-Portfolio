@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import HeroSection from '../components/HeroSection';
 
-const Collection = lazy(() => import('./Collection'));
+const FeaturedCollection = lazy(() => import('../components/FeaturedCollection'));
 const Story = lazy(() => import('./Story'));
 const About = lazy(() => import('./About'));
 const Contact = lazy(() => import('./Contact'));
@@ -80,10 +80,9 @@ export default function Home({
         <IngredientsSection />
       </Suspense>
 
-      {/* 2. Collection Section */}
       <div className="relative z-40 bg-background w-full">
         <Suspense fallback={null}>
-          <Collection 
+          <FeaturedCollection 
             isSection={true} 
             onProductSelect={onProductSelect}
             wishlist={wishlist}

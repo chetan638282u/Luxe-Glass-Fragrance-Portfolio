@@ -8,6 +8,7 @@ import Home from './pages/Home';
 const CartDrawer = lazy(() => import('./components/CartDrawer'));
 const InquiryModal = lazy(() => import('./components/InquiryModal'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
+const Collection = lazy(() => import('./pages/Collection'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 
 import { checkSession, addInquiry, addOrder } from './admin/adminStore';
@@ -101,7 +102,7 @@ function PublicApp() {
   useEffect(() => {
     const onHashChange = () => {
       const hash = window.location.hash.slice(1);
-      setActiveOverlay(hash === 'checkout' ? 'checkout' : null);
+      setActiveOverlay(hash === 'checkout' ? 'checkout' : (hash === 'collection' ? 'collection' : null));
     };
     window.addEventListener('hashchange', onHashChange);
     onHashChange();
@@ -131,7 +132,7 @@ function PublicApp() {
 
   // Lock body scroll when any overlay is active
   useEffect(() => {
-    if (activeOverlay === 'checkout' || detailOpen || cartOpen || inquiryOpen) {
+    if (activeOverlay === 'checkout' || activeOverlay === 'collection' || detailOpen || cartOpen || inquiryOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -214,7 +215,7 @@ function PublicApp() {
       setDetailOpen(false);
       setSelectedProductId(null);
     }
-    if (window.location.hash === '#checkout') {
+    if (window.location.hash === '#checkout' || window.location.hash === '#collection') {
       navigate(-1);
     } else if (window.location.hash) {
       navigate(window.location.pathname + window.location.search, { replace: true });
@@ -275,6 +276,29 @@ function PublicApp() {
                 />
               </Suspense>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Collection overlay */}
+      <AnimatePresence>
+        {activeOverlay === 'collection' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={window.innerWidth < 768 ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0 }}
+            className="fixed inset-0 z-[70] overflow-y-auto overscroll-y-contain bg-background"
+            data-lenis-prevent="true"
+          >
+            <Suspense fallback={<div className="flex h-[80vh] items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin"></div></div>}>
+              <Collection
+                onClose={() => navigate(-1)}
+                wishlist={wishlist}
+                onToggleWishlist={handleToggleWishlist}
+                onAddToCart={handleAddToCart}
+                onProductSelect={handleOpenProductDetail}
+              />
+            </Suspense>
           </motion.div>
         )}
       </AnimatePresence>
@@ -382,7 +406,7 @@ function PublicApp() {
         <h2 className="font-serif text-2xl tracking-widest text-primary font-medium">AETHERIS</h2>
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-6">
           <button onClick={() => { closeOverlay(); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="font-sans text-xs text-on-surface/40 hover:text-primary transition-colors uppercase tracking-wider cursor-pointer">Our Story</button>
-          <button onClick={() => { closeOverlay(); setTimeout(() => document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="font-sans text-xs text-on-surface/40 hover:text-primary transition-colors uppercase tracking-wider cursor-pointer">Collection</button>
+          <a href="#collection" onClick={closeOverlay} className="font-sans text-xs text-on-surface/40 hover:text-primary transition-colors uppercase tracking-wider cursor-pointer">Collection</a>
           <button onClick={() => { closeOverlay(); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="font-sans text-xs text-on-surface/40 hover:text-primary transition-colors uppercase tracking-wider cursor-pointer">Atelier Booking</button>
         </div>
         <p className="font-sans text-[10px] tracking-[0.15em] text-on-surface/20">© 2026 AETHERIS PERFUMES. ALL RIGHTS RESERVED.</p>
